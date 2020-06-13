@@ -10,7 +10,7 @@ CLONE REPO:
 
 
 Assignment2-Frontend - instructions
-- cd Assignment2-Frontend/assignment2
+- cd Assignment2-Frontend/
 - yarn
 - yarn start
 
