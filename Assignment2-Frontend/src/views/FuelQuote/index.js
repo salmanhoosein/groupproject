@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Grid, makeStyles } from "@material-ui/core";
 
-import InfoForm from "./ProfileForm";
+import FQFORM from "./FuelQuoteBody";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -16,7 +16,6 @@ function ProfilesBody(props) {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const [profileData, setProfileData] = React.useState({});
   const [fuelQuoteData, setFuelQuoteData] = React.useState({});
 
   return (
@@ -25,17 +24,11 @@ function ProfilesBody(props) {
         paddingLeft: "20",
       }}
       container
-      justify="space-between"
+      alignContent="center"
     >
-      {/* ProfileForm */}
-      <Grid item xs style={{ paddingRight: 15 }}>
-        <InfoForm
-          formTitle={"Profile Details"}
-          saveProfile={(profileDetails) => {
-            console.log("profile:", profileDetails);
-            setProfileData(profileDetails);
-          }}
-        />
+      {/* FUEL QUOTE FORM */}
+      <Grid item md={6} xs={12}>
+        <FQFORM />
       </Grid>
     </Grid>
   );

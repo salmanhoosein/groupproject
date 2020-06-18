@@ -16,7 +16,7 @@ const useStyles = makeStyles(() => ({
   root: {},
 }));
 
-function LoginForm({ className, onSubmitSuccess, ...rest }) {
+function LoginForm({ onSubmitSuccess }) {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -59,12 +59,7 @@ function LoginForm({ className, onSubmitSuccess, ...rest }) {
         touched,
         values,
       }) => (
-        <form
-          noValidate
-          className={clsx(classes.root, className)}
-          onSubmit={handleSubmit}
-          {...rest}
-        >
+        <form noValidate className={classes.root} onSubmit={handleSubmit}>
           <TextField
             error={Boolean(touched.email && errors.email)}
             fullWidth

@@ -35,6 +35,16 @@ function NavBar() {
             <Grid item>
               <Link
                 component={RouterLink}
+                to="/app/history"
+                variant="body2"
+                color="textSecondary"
+              >
+                <Button color="secondary"> History</Button>
+              </Link>
+            </Grid>
+            <Grid item>
+              <Link
+                component={RouterLink}
                 to="/app/profiles"
                 variant="body2"
                 color="textSecondary"

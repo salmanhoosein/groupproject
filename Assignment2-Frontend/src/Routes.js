@@ -5,7 +5,8 @@ import AuthGuard from "./views/Auth/AuthGuard";
 import LoginView from "./views/Auth/LoginView";
 import RegisterView from "./views/Auth/RegisterView";
 import ProfilesBody from "./views/Profiles";
-import FuelQuoteTabular from "./views/FuelQuote/FuelQuoteBody";
+import HistoryBody from "./views/History/HistoryTable";
+import FuelQuoteTabular from "./views/FuelQuote/FuelQuoteForm";
 
 function Routes() {
   return (
@@ -20,6 +21,7 @@ function Routes() {
           <Layout {...props}>
             <Switch>
               <Redirect exact from="/app" to="/app/profiles" />
+              <Route exact path="/app/history" component={HistoryBody} />
               <Route exact path="/app/profiles" component={ProfilesBody} />
               <Route exact path="/app/fuelquote" component={FuelQuoteTabular} />
             </Switch>

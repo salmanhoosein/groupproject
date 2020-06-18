@@ -42,7 +42,6 @@ function FQFORM(props) {
         >
           <CardHeader className={classes.cardHeader} title="Fuel Quote" />
           <Divider />
-
           <CardContent>
             <Grid container spacing={1}>
               <Grid item xs>

@@ -47,7 +47,6 @@ function RegisterView() {
           <Box my={2}>
             <Divider />
           </Box>
-          
         </CardContent>
       </Card>
     </Container>
