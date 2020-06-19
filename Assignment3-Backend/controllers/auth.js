@@ -80,7 +80,7 @@ exports.postSignUp = (req, res, next) => {
 
   res.status(200).json({ result: "TEST SUCCESS" });
 
-  //hashPassword
+  //hashPassword and add user to Database
   // bcrypt
   //   .hash(password, 12) //hash password if email doesn't exist
   //   .then((hashedPassword) => {
