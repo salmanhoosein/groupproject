@@ -7,8 +7,8 @@ import RegisterView from "./views/Auth/RegisterView";
 import ProfilesBody from "./views/Profiles";
 import HistoryBody from "./views/History/HistoryTable";
 import FuelQuoteTabular from "./views/FuelQuote/FuelQuoteForm";
-import Homepage from "./views/Home/Home"
-
+import HomePage from "./views/Home/Home";
+import AboutPage from "./views/About/About";
 
 function Routes() {
   return (
@@ -16,14 +16,15 @@ function Routes() {
       <Redirect exact from="/" to="/login" />
       <Route exact path="/login" component={LoginView} />
       <Route exact path="/register" component={RegisterView} />
-      <Route exact path="/home" component={Homepage} />
       {/* AUTH  GUARD */}
       <AuthGuard
         path="/app"
         render={(props) => (
           <Layout {...props}>
             <Switch>
-              <Redirect exact from="/app" to="/app/profiles" />
+              <Redirect exact from="/app" to="/app/home" />
+              <Route exact path="/app/home" component={HomePage} />
+              <Route exact path="/app/about" component={AboutPage} />
               <Route exact path="/app/history" component={HistoryBody} />
               <Route exact path="/app/profiles" component={ProfilesBody} />
               <Route exact path="/app/fuelquote" component={FuelQuoteTabular} />

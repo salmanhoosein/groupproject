@@ -24,7 +24,7 @@ function LoginView() {
   const history = useHistory();
 
   const handleSubmitSuccess = () => {
-    history.push("/home");
+    history.push("/app/home");
   };
 
   return (

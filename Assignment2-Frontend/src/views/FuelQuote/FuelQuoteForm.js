@@ -1,7 +1,6 @@
 // @ts-nocheck
 /* eslint-disable max-len */
 import React from "react";
-import "./FuelQuoteForm.css"
 import { useHistory } from "react-router-dom";
 
 import {
@@ -13,6 +12,7 @@ import {
   CardHeader,
   Divider,
   CardContent,
+  Button,
 } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -33,9 +33,16 @@ function FQFORM(props) {
   const [amountDue, setAmountDue] = React.useState("");
 
   return (
-    <>
-    <Grid container justify="space-between">
-      <Grid item xs style={{ marginLeft: 15 }}>
+    <Grid
+      container
+      style={{
+        margin: "auto",
+        marginTop: "10vh",
+        width: "90%",
+      }}
+      justify="space-between"
+    >
+      <Grid item xs>
         <Card
           style={{
             backgroundColor: "lightgrey",
@@ -123,14 +130,18 @@ function FQFORM(props) {
                 />
               </Grid>
             </Grid>
+            <Box p={1} />
+            <Grid container justify="center">
+              <Grid item>
+                <Button variant="outlined" color="inherit">
+                  Submit
+                </Button>
+              </Grid>
+            </Grid>
           </CardContent>
         </Card>
       </Grid>
     </Grid>
-    <div class="container" >
-    <input type="submit" value="Get Quote"/> 
-    </div>
-    </>
   );
 }
 

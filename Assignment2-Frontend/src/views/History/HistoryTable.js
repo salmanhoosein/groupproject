@@ -12,10 +12,27 @@ const useStyles = makeStyles({
   table: {
     border: "2px solid black",
     backgroundColor: "lightgrey",
+    margin: "auto",
+    marginTop: "10vh",
+    width: "95%",
   },
 });
 
 const data = [
+  {
+    gallons: 1,
+    DeliveryDate: "01-12-12",
+    Price: 12,
+    AmountDue: 12,
+    DeliveryAddress: "123 test address",
+  },
+  {
+    gallons: 1,
+    DeliveryDate: "01-12-12",
+    Price: 12,
+    AmountDue: 12,
+    DeliveryAddress: "123 test address",
+  },
   {
     gallons: 1,
     DeliveryDate: "01-12-12",

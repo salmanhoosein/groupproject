@@ -49,6 +49,9 @@ function InfoForm(props) {
   return (
     <Card
       style={{
+        margin: "auto",
+        marginTop: "10vh",
+        width: "90%",
         backgroundColor: "lightgrey",
         border: "2px solid black",
       }}
@@ -162,6 +165,14 @@ function InfoForm(props) {
               }}
               value={zip}
             />
+          </Grid>
+        </Grid>
+        <Box p={1} />
+        <Grid container justify="center">
+          <Grid item>
+            <Button variant="outlined" color="inherit">
+              Submit
+            </Button>
           </Grid>
         </Grid>
       </CardContent>

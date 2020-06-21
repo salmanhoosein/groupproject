@@ -21,7 +21,6 @@ function ProfilesBody(props) {
   return (
     <Grid
       style={{
-        paddingLeft: "20",
       }}
       container
       alignContent="center"

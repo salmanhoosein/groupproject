@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Grid, makeStyles } from "@material-ui/core";
+import { Grid, makeStyles, Button } from "@material-ui/core";
 
 import InfoForm from "./ProfileForm";
 
@@ -20,16 +20,9 @@ function ProfilesBody(props) {
   const [fuelQuoteData, setFuelQuoteData] = React.useState({});
 
   return (
-    <>
-    <Grid
-      style={{
-        paddingLeft: "20",
-      }}
-      container
-      justify="space-between"
-    >
+    <Grid container>
       {/* ProfileForm */}
-      <Grid item xs style={{ paddingRight: 15 }}>
+      <Grid item xs={12}>
         <InfoForm
           formTitle={"Profile Details"}
           saveProfile={(profileDetails) => {
@@ -39,11 +32,6 @@ function ProfilesBody(props) {
         />
       </Grid>
     </Grid>
-    <div class="container" >
-
-    <input type="submit" value="Create Profile"/> 
-    </div>
-    </>
   );
 }
 
