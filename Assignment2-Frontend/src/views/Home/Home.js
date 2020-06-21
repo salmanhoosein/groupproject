@@ -7,7 +7,8 @@ const useStyles = makeStyles(() => ({
     background:
       "url(https://greasebook.com/blog/wp-content/uploads/2015/06/pumper-jobs-lined-up.jpg)",
     backgroundSize: "cover",
-    height: "calc(120vh - 80px)",
+    backgroundRepeat: "no-repeat",
+    height: "100vh",
   },
 }));
 

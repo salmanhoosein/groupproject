@@ -23,10 +23,6 @@ function LoginView() {
   const classes = useStyles();
   const history = useHistory();
 
-  const handleSubmitSuccess = () => {
-    history.push("/app/home");
-  };
-
   return (
     <Container maxWidth="md">
       <Box mb={8} display="flex" alignItems="center"></Box>
@@ -42,7 +38,7 @@ function LoginView() {
           </Typography>
           <Box mt={2}></Box>
           <Box mt={3}>
-            <LoginForm onSubmitSuccess={handleSubmitSuccess} />
+            <LoginForm />
           </Box>
           <Box my={2}>
             <Divider />

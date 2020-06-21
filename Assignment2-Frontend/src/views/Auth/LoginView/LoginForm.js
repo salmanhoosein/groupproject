@@ -2,8 +2,9 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import clsx from "clsx";
 import * as Yup from "yup";
-import PropTypes from "prop-types";
 import { Formik } from "formik";
+import { useHistory } from "react-router";
+
 import {
   Box,
   Button,
@@ -19,47 +20,31 @@ const useStyles = makeStyles(() => ({
 function LoginForm({ onSubmitSuccess }) {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const history = useHistory();
+
+  const [email, setEmail] = React.useState(" ");
+  const [password, setPassword] = React.useState(" ");
 
   return (
     <Formik
       initialValues={{
-        email: "default@project.io",
-        password: "user",
+        email: null,
+        password: null,
       }}
       validationSchema={Yup.object().shape({
         email: Yup.string()
           .email("Must be a valid email")
           .max(255)
+          .nullable()
           .required("Email is required"),
         password: Yup.string()
           .max(255)
+          .nullable()
           .required("Password is required"),
       })}
-      onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-        try {
-          // await dispatch(login(values.email, values.password));
-          onSubmitSuccess();
-        } catch (error) {
-          const message =
-            (error.response && error.response.data.message) ||
-            "Something went wrong";
-
-          setStatus({ success: false });
-          setErrors({ submit: message });
-          setSubmitting(false);
-        }
-      }}
     >
-      {({
-        errors,
-        handleBlur,
-        handleChange,
-        handleSubmit,
-        isSubmitting,
-        touched,
-        values,
-      }) => (
-        <form noValidate className={classes.root} onSubmit={handleSubmit}>
+      {({ errors, handleBlur, handleChange, touched, values }) => (
+        <>
           <TextField
             error={Boolean(touched.email && errors.email)}
             fullWidth
@@ -69,7 +54,10 @@ function LoginForm({ onSubmitSuccess }) {
             margin="normal"
             name="email"
             onBlur={handleBlur}
-            onChange={handleChange}
+            onChange={(event) => {
+              handleChange(event);
+              setEmail(event.target.value);
+            }}
             type="email"
             value={values.email}
             variant="outlined"
@@ -82,7 +70,10 @@ function LoginForm({ onSubmitSuccess }) {
             margin="normal"
             name="password"
             onBlur={handleBlur}
-            onChange={handleChange}
+            onChange={(event) => {
+              handleChange(event);
+              setPassword(event.target.value);
+            }}
             type="password"
             value={values.password}
             variant="outlined"
@@ -90,21 +81,18 @@ function LoginForm({ onSubmitSuccess }) {
           <Box mt={2}>
             <Button
               color="secondary"
-              disabled={isSubmitting}
               fullWidth
               size="large"
               type="submit"
               variant="contained"
+              onClick={() => {
+                history.push("/app/home");
+              }}
             >
               Log In
             </Button>
-            {errors.submit && (
-              <Box mt={3}>
-                <FormHelperText error>{errors.submit}</FormHelperText>
-              </Box>
-            )}
           </Box>
-        </form>
+        </>
       )}
     </Formik>
   );

@@ -21,11 +21,6 @@ const useStyles = makeStyles((theme) => ({}));
 
 function RegisterView() {
   const classes = useStyles();
-  const history = useHistory();
-
-  const handleSubmitSuccess = () => {
-    history.push("/app");
-  };
 
   return (
     <Container maxWidth="md">
@@ -42,7 +37,7 @@ function RegisterView() {
           </Typography>
           <Box mt={2}></Box>
           <Box mt={3}>
-            <RegisterForm onSubmitSuccess={handleSubmitSuccess} />
+            <RegisterForm />
           </Box>
           <Box my={2}>
             <Divider />
