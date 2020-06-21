@@ -1,6 +1,7 @@
 // @ts-nocheck
 /* eslint-disable max-len */
 import React from "react";
+import "./FuelQuoteForm.css"
 import { useHistory } from "react-router-dom";
 
 import {
@@ -32,6 +33,7 @@ function FQFORM(props) {
   const [amountDue, setAmountDue] = React.useState("");
 
   return (
+    <>
     <Grid container justify="space-between">
       <Grid item xs style={{ marginLeft: 15 }}>
         <Card
@@ -125,6 +127,10 @@ function FQFORM(props) {
         </Card>
       </Grid>
     </Grid>
+    <div class="container" >
+    <input type="submit" value="Get Quote"/> 
+    </div>
+    </>
   );
 }
 

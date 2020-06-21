@@ -20,6 +20,7 @@ function ProfilesBody(props) {
   const [fuelQuoteData, setFuelQuoteData] = React.useState({});
 
   return (
+    <>
     <Grid
       style={{
         paddingLeft: "20",
@@ -38,6 +39,11 @@ function ProfilesBody(props) {
         />
       </Grid>
     </Grid>
+    <div class="container" >
+
+    <input type="submit" value="Create Profile"/> 
+    </div>
+    </>
   );
 }
 
