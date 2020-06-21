@@ -1,6 +1,7 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable react/prop-types */
 import React, { useEffect } from "react";
+import "./NavBar.css";
 import { Link as RouterLink } from "react-router-dom";
 import {
   Box,
@@ -24,50 +25,59 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+
 function NavBar() {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-          <Grid container justify="space-evenly">
-            <Grid item>
-              <Link
-                component={RouterLink}
-                to="/app/history"
-                variant="body2"
-                color="textSecondary"
-              >
-                <Button color="secondary"> History</Button>
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link
-                component={RouterLink}
-                to="/app/profiles"
-                variant="body2"
-                color="textSecondary"
-              >
-                <Button color="secondary"> Profiles</Button>
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link
-                component={RouterLink}
-                to="/app/fuelquote"
-                variant="body2"
-                color="textSecondary"
-              >
-                <Button color="secondary">Fuel Quote</Button>
-              </Link>
-            </Grid>
-            <Grid item>
-              <Button color="secondary">Logout</Button>
-            </Grid>
-          </Grid>
-        </Toolbar>
-      </AppBar>
+    
+   <div class="topnav">
+      <Link
+        component={RouterLink}
+        to="/home"
+        variant="body2"
+        color="textSecondary"
+      >
+        Home
+      </Link>
+    
+    <Link  variant="body2"
+      color="textSecondary">
+        About us
+    </Link>
+
+   <Link
+      component={RouterLink}
+      to="/app/fuelquote"
+      variant="body2"
+      color="textSecondary"
+  >
+              Get Quote
+    </Link>
+
+   <Link
+        component={RouterLink}
+        to="/app/history"
+        variant="body2"
+        color="textSecondary"
+    >
+        Quote History
+    </Link>
+  <div class="topnav-right">
+    <Link
+      component={RouterLink}
+      to="/app/profiles"
+      variant="body2"
+      color="textSecondary"
+  >
+        Profiles
+    </Link>
+    <Link  variant="body2"
+      color="textSecondary">
+        Log out
+    </Link>
+
+  </div>
     </div>
   );
 }

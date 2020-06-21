@@ -7,6 +7,8 @@ import RegisterView from "./views/Auth/RegisterView";
 import ProfilesBody from "./views/Profiles";
 import HistoryBody from "./views/History/HistoryTable";
 import FuelQuoteTabular from "./views/FuelQuote/FuelQuoteForm";
+import Homepage from "./views/Home/Home"
+
 
 function Routes() {
   return (
@@ -14,6 +16,7 @@ function Routes() {
       <Redirect exact from="/" to="/login" />
       <Route exact path="/login" component={LoginView} />
       <Route exact path="/register" component={RegisterView} />
+      <Route exact path="/home" component={Homepage} />
       {/* AUTH  GUARD */}
       <AuthGuard
         path="/app"
