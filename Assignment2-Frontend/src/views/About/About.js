@@ -45,12 +45,18 @@ function AboutPage() {
           individuals ready to meet all demands. The "4353 Group", the name of
           the team, met after an instructor of a software desing class gave a
           group assingment to his students. By mere chance, Edwin Campuzano,
-          Salman Hossein, Zain Momin, and Nhat Do found each other and thus began the beginning of the great company "Fuel Stuff".
+          Salman Hossein, Zain Momin, and Nhat Do found each other and thus
+          began the beginning of the great company "Fuel Stuff". 
+          <br></br>
           Something to say: ("Please add something, like a quote or WTV")
-          Edwin Campuzano: "There is nothing to fear, but fear itself" - Abraham Washington. 
-          Salman Hossein: "Im super gay" - Sal Hoosein
-          Zain Momin: "Spooderman"
-          Nhat Do: "Pepe the frog"
+          <br></br>
+          Edwin Campuzano: "<i>There is nothing to fear, but fear itself</i>" - Abraham Washington
+          <br></br>
+          Salman Hossein: "<i>Im the gayest one here</i>" - Sal 
+          <br></br>
+          Zain Momin: "<i>Spooderman</i>" 
+          <br></br>
+          Nhat Do: "<i>Pepe the frog</i>"
         </p>
       </Grid>
       <Grid
@@ -68,15 +74,8 @@ function AboutPage() {
             paddingLeft: 10,
           }}
         >
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book. It has survived not only
-          five centuries, but also the leap into electronic typesetting,
-          remaining essentially unchanged. It was popularised in the 1960s with
-          the release of Letraset sheets containing Lorem Ipsum passages, and
-          more recently with desktop publishing software like Aldus PageMaker
-          including versions of Lorem Ipsum.
+          Fuel Stuff was founded in the year of 2020, during the world wide
+          COVID-19 pendemic. Given the circumstances, the company was able to triumph and become what it is today. Our mission is to do whatever we can to provide our costumers with the best quality fuel on the market. Using our highly advanced scientific calculations, we can give appropriate and affordable fuel quotes to our clinets no matter where they are.
         </p>
       </Grid>
     </Grid>
