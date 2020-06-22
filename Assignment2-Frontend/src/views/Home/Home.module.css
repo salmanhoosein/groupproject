@@ -1,0 +1,15 @@
+.aboutLink{
+  color:white;
+  text-decoration: underline;
+}
+
+.top {
+  color: white;
+  margin: 0;
+  padding: 120px;
+  font-family:  'Droid serif', serif;
+  font-size: 20px;
+  font-style: italic; 
+  line-height: 44px;
+  margin: 0 0 12px;
+}
