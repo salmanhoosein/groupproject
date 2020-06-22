@@ -34,22 +34,23 @@ function AboutPage() {
           paddingLeft: 10,
         }}
       >
-        <Typography variant="h4">Who We Are?</Typography>
+        <Typography variant="h4">Meet the Team?</Typography>
         <p
           style={{
             marginTop: 20,
             paddingLeft: 10,
           }}
         >
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book. It has survived not only
-          five centuries, but also the leap into electronic typesetting,
-          remaining essentially unchanged. It was popularised in the 1960s with
-          the release of Letraset sheets containing Lorem Ipsum passages, and
-          more recently with desktop publishing software like Aldus PageMaker
-          including versions of Lorem Ipsum.
+          The team at "Fuel Stuff" is build up of dedicated hard working
+          individuals ready to meet all demands. The "4353 Group", the name of
+          the team, met after an instructor of a software desing class gave a
+          group assingment to his students. By mere chance, Edwin Campuzano,
+          Salman Hossein, Zain Momin, and Nhat Do found each other and thus began the beginning of the great company "Fuel Stuff".
+          Something to say: ("Please add something, like a quote or WTV")
+          Edwin Campuzano: "There is nothing to fear, but fear itself" - Abraham Washington. 
+          Salman Hossein: "Im super gay" - Sal Hoosein
+          Zain Momin: "Spooderman"
+          Nhat Do: "Pepe the frog"
         </p>
       </Grid>
       <Grid
