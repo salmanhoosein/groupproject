@@ -124,7 +124,7 @@ function FQFORM(props) {
                 <Grid item xs>
                   <TextField
                     disabled={true}
-                    label="Suggested Price"
+                    label="Suggested Price/Gallon"
                     fullWidth
                     variant="outlined"
                     onChange={(event) => {
