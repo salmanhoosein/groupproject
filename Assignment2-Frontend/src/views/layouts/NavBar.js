@@ -20,7 +20,6 @@ function NavBar() {
 
   return (
     <Grid
-
       container
       style={{
         backgroundColor: "#222",
@@ -40,13 +39,13 @@ function NavBar() {
           variant="body2"
           color="textSecondary"
         >
-          <Button 
-          style={{
-            color: "white",
-
-          }}
-          className={classes.buttonStyle}
-          size="large">
+          <Button
+            style={{
+              color: "white",
+            }}
+            className={classes.buttonStyle}
+            size="large"
+          >
             Home
           </Button>
         </Link>
@@ -56,12 +55,13 @@ function NavBar() {
           variant="body2"
           color="textSecondary"
         >
-          <Button 
-          style={{
-            color: "white",
-          }}
-          className={classes.buttonStyle}
-          size="large">
+          <Button
+            style={{
+              color: "white",
+            }}
+            className={classes.buttonStyle}
+            size="large"
+          >
             About Us
           </Button>
         </Link>
@@ -71,12 +71,13 @@ function NavBar() {
           variant="body2"
           color="textSecondary"
         >
-          <Button 
-          style={{
-            color: "white",
-          }}
-          className={classes.buttonStyle}
-          size="large">
+          <Button
+            style={{
+              color: "white",
+            }}
+            className={classes.buttonStyle}
+            size="large"
+          >
             Get Quote
           </Button>
         </Link>
@@ -87,12 +88,13 @@ function NavBar() {
           variant="body2"
           color="textSecondary"
         >
-          <Button 
-          style={{
-            color: "white",
-          }}
-          className={classes.buttonStyle}
-          size="large">
+          <Button
+            style={{
+              color: "white",
+            }}
+            className={classes.buttonStyle}
+            size="large"
+          >
             Quote History
           </Button>
         </Link>
@@ -109,23 +111,24 @@ function NavBar() {
           variant="body2"
           color="textSecondary"
         >
-          <Button 
-          style={{
-            color: "white",
-          }}
-          className={classes.buttonStyle}
-          size="large">
+          <Button
+            style={{
+              color: "white",
+            }}
+            className={classes.buttonStyle}
+            size="large"
+          >
             Profile
           </Button>
         </Link>
         <Link variant="body2" color="textSecondary">
-          <Button 
-          style={{
-            color: "white",
-
-          }}
-          className={classes.buttonStyle}
-          size="large">
+          <Button
+            style={{
+              color: "white",
+            }}
+            className={classes.buttonStyle}
+            size="large"
+          >
             Log Out
           </Button>
         </Link>

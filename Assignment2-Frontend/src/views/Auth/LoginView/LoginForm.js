@@ -1,10 +1,11 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import clsx from "clsx";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import { useHistory } from "react-router";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 import {
   Box,
   Button,
@@ -12,6 +13,14 @@ import {
   FormHelperText,
   makeStyles,
 } from "@material-ui/core";
+
+toast.configure({
+  autoClose: 5000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+});
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -28,17 +37,15 @@ function LoginForm({ onSubmitSuccess }) {
   return (
     <Formik
       initialValues={{
-        email: null,
-        password: null,
+        email: "",
+        password: "",
       }}
       validationSchema={Yup.object().shape({
         email: Yup.string()
           .email("Must be a valid email")
-          .max(255)
           .nullable()
           .required("Email is required"),
         password: Yup.string()
-          .max(255)
           .nullable()
           .required("Password is required"),
       })}
@@ -86,7 +93,22 @@ function LoginForm({ onSubmitSuccess }) {
               type="submit"
               variant="contained"
               onClick={() => {
-                history.push("/app/home");
+                axios
+                  .post("http://localhost:8080/auth/login", {
+                    email: email,
+                    password: password,
+                  })
+                  .then((res) => {
+                    if (res.data.success) {
+                      //push to home page
+                      history.push("/app/home");
+                      console.log(res.data);
+                    } else {
+                      console.log(res.data);
+                      toast.error("Error Logging In! Try Again!");
+                    }
+                  })
+                  .catch((err) => console.log(err));
               }}
             >
               Log In

@@ -1,11 +1,12 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import clsx from "clsx";
 import * as Yup from "yup";
 import PropTypes from "prop-types";
 import { Link as RouterLink } from "react-router-dom";
 import { Formik } from "formik";
 import { useHistory } from "react-router";
+import { ToastContainer, toast } from "react-toastify";
+import axios from "axios";
 
 import {
   Box,
@@ -17,6 +18,13 @@ import {
   setRef,
 } from "@material-ui/core";
 
+toast.configure({
+  autoClose: 5000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+});
 const useStyles = makeStyles(() => ({
   root: {},
 }));
@@ -32,18 +40,16 @@ function RegisterForm() {
   return (
     <Formik
       initialValues={{
-        email: null,
-        password: null,
+        email: "",
+        password: "",
       }}
       validationSchema={Yup.object().shape({
         email: Yup.string()
           .email("Must be a valid email")
-          .max(255)
           .nullable()
           .required("Email is required"),
         password: Yup.string()
-          .max(255)
-          .nullable() 
+          .nullable()
           .required("Password is required"),
       })}
     >
@@ -83,22 +89,32 @@ function RegisterForm() {
             variant="outlined"
           />
           <Box mt={2}>
-            <Link
-              component={RouterLink}
-              to="/login"
-              variant="body2"
-              color="textSecondary"
+            <Button
+              color="secondary"
+              fullWidth
+              size="large"
+              type="submit"
+              variant="contained"
+              onClick={() => {
+                axios
+                  .post("http://localhost:8080/auth/register", {
+                    email: email,
+                    password: password,
+                  })
+                  .then((res) => {
+                    if (res.data.success) {
+                      //push to home page
+                      history.push("/login");
+                    } else {
+                      console.log(res.data);
+                      toast.error("Error Registering! Try Again!");
+                    }
+                  })
+                  .catch((err) => console.log(err));
+              }}
             >
-              <Button
-                color="secondary"
-                fullWidth
-                size="large"
-                type="submit"
-                variant="contained"
-              >
-                Create
-              </Button>
-            </Link>
+              Create
+            </Button>
           </Box>
         </>
       )}

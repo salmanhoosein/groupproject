@@ -1,6 +1,6 @@
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
-import style from './Home.module.css';
+import style from "./Home.module.css";
 import { Grid, makeStyles, Typography, Link } from "@material-ui/core";
 
 const useStyles = makeStyles(() => ({
@@ -18,16 +18,15 @@ function HomePage() {
 
   return (
     <Grid container className={classes.background}>
-    <section className={style.top}>
-    <div class="centered">Pioneering the petroleum industry with professional, cost effective solutions </div>
-      <Link  component={RouterLink} to="/app/about">
-            <Typography className={style.aboutLink}>
-              LEARN MORE
-            </Typography>
-      </Link>
+      <section className={style.top}>
+        <div class="centered">
+          Pioneering the petroleum industry with professional, cost effective
+          solutions{" "}
+        </div>
+        <Link component={RouterLink} to="/app/about">
+          <Typography className={style.aboutLink}>LEARN MORE</Typography>
+        </Link>
       </section>
-        
-        
     </Grid>
   );
 }
