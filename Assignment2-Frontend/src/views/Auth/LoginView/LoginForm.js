@@ -100,6 +100,8 @@ function LoginForm({ onSubmitSuccess }) {
                 })
                   .then((res) => {
                     dispatch(storeUSER(res.data));
+                    //set token to be persistent in local storage
+                    localStorage.setItem("authtoken", res.data.token);
                     if (res.data.success) {
                       //push to home page
                       history.push("/app/home");

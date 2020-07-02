@@ -51,13 +51,17 @@ function FQFORM(props) {
 
   //get profile from database
   React.useEffect(() => {
+    //get token from redux, if user refreshed then from localstorage
+   let token = reduxAuth.user.token
+      ? reduxAuth.user.token
+      : localStorage.getItem("authtoken");
     axios({
       method: "GET",
       url: "http://localhost:8080/profile/retrieve",
       //get data with JWT Auth token
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + reduxAuth.user.token,
+        Authorization: "Bearer " + token,
       },
     })
       .then((res) => {
