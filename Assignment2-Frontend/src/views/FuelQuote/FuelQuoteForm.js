@@ -1,30 +1,31 @@
 // @ts-nocheck
 /* eslint-disable max-len */
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 import * as Yup from "yup";
+import axios from "axios";
 import { Formik } from "formik";
+import { toast } from "react-toastify";
 
 import {
   TextField,
   Box,
   Button,
-  FormHelperText,
   Grid,
-  Select,
-  MenuItem,
-  InputLabel,
-  FormControl,
   makeStyles,
   Card,
   CardHeader,
   Divider,
   CardContent,
-  OutlinedInput,
 } from "@material-ui/core";
 
-import { states } from "../../constants/index";
-
+toast.configure({
+  autoClose: 3000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+});
 const useStyles = makeStyles((theme) => ({
   root: {},
 
@@ -41,12 +42,36 @@ const useStyles = makeStyles((theme) => ({
 
 function FQFORM(props) {
   const classes = useStyles();
-
+  const reduxAuth = useSelector((state) => state.auth);
   const [gallonsRequested, setGallonsRequested] = React.useState();
-  const [deliveryAddress, setDeliveryAddress] = React.useState("");
-  const [deliveryDate, setDeliveryDate] = React.useState("");
+  const [deliveryAddress, setDeliveryAddress] = React.useState();
+  const [deliveryDate, setDeliveryDate] = React.useState();
   const [price, setPrice] = React.useState();
   const [amountDue, setAmountDue] = React.useState();
+
+  //get profile from database
+  React.useEffect(() => {
+    axios({
+      method: "GET",
+      url: "http://localhost:8080/profile/retrieve",
+      //get data with JWT Auth token
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + reduxAuth.user.token,
+      },
+    })
+      .then((res) => {
+        if (res.data.success) {
+          // setDeliveryAddress(res.data.profile.deliveryAddress);
+          setDeliveryAddress("test address");
+          toast.success("Profile Retrieved from DB!");
+        }
+        if (res.data.error) {
+          toast.error(res.data.error);
+        }
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <Card

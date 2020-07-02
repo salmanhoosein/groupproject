@@ -7,8 +7,12 @@ const User = require("../models/user");
 router.post(
   "/login",
   [
-    check("email").isEmail().withMessage("Enter a valid email"),
-    check("password", "Invalid Password").isAlphanumeric().trim(),
+    check("email")
+      .isEmail()
+      .withMessage("Enter a valid email"),
+    check("password", "Invalid Password").isLength({
+      min: 1,
+    }),
   ],
   authController.postLogin
 );
@@ -19,6 +23,9 @@ router.post(
     check("email")
       .isEmail()
       .withMessage("Enter a valid email")
+      .isLength({
+        min: 1,
+      })
       .normalizeEmail(), //make all lowercase //Sanitizing
     // .custom((value, { req }) => {
     //   return User.findOne({
@@ -30,7 +37,9 @@ router.post(
     //     }
     //   });
     // }),
-    check("password", "Invalid Password").isAlphanumeric().trim(),
+    check("password", "Invalid Password").isLength({
+      min: 1,
+    }),
   ],
   authController.postRegister
 );

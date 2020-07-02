@@ -1,21 +1,19 @@
 // @ts-nocheck
 /* eslint-disable max-len */
 import React from "react";
+import { toast } from "react-toastify";
+
 import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
 
 import {
   TextField,
   Box,
   Button,
-  FormHelperText,
   Grid,
-  Select,
-  MenuItem,
-  InputLabel,
-  FormControl,
   makeStyles,
   Card,
   CardHeader,
@@ -25,6 +23,13 @@ import {
 } from "@material-ui/core";
 
 import { states } from "../../constants/index";
+toast.configure({
+  autoClose: 3000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+});
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -42,13 +47,14 @@ const useStyles = makeStyles((theme) => ({
 
 function InfoForm(props) {
   const classes = useStyles();
+  const reduxAuth = useSelector((state) => state.auth);
 
-  const [fullName, setFullName] = React.useState(" ");
-  const [addressOne, setAddressOne] = React.useState(" ");
-  const [addressTwo, setAddressTwo] = React.useState(" ");
-  const [city, setCity] = React.useState(" ");
-  const [state, setState] = React.useState(" ");
-  const [zip, setZip] = React.useState(" ");
+  const [fullName, setFullName] = React.useState();
+  const [addressOne, setAddressOne] = React.useState();
+  const [addressTwo, setAddressTwo] = React.useState();
+  const [city, setCity] = React.useState();
+  const [state, setState] = React.useState();
+  const [zip, setZip] = React.useState();
 
   return (
     <Card
@@ -136,7 +142,7 @@ function InfoForm(props) {
                       handleChange(event);
                       setAddressOne(event.target.value);
                     }}
-                    value={addressOne}
+                    value={values.addressOne}
                   />
                 </Grid>
               </Grid>
@@ -174,7 +180,6 @@ function InfoForm(props) {
                     onBlur={handleBlur}
                     onChange={(event) => {
                       handleChange(event);
-
                       setCity(event.target.value);
                     }}
                     value={values.city}
@@ -220,7 +225,6 @@ function InfoForm(props) {
                     onBlur={handleBlur}
                     onChange={(event) => {
                       handleChange(event);
-
                       setZip(event.target.value);
                     }}
                     value={values.zip}
@@ -232,13 +236,37 @@ function InfoForm(props) {
                 <Grid item>
                   <Button
                     color="secondary"
-                    disabled={true}
                     fullWidth
                     size="large"
                     type="submit"
                     variant="contained"
                     onClick={() => {
-                      // axios.post("http://localhost:8080/admin/profiles", {});
+                      axios({
+                        method: "POST",
+                        url: "http://localhost:8080/profile/add",
+                        //send data with JWT Auth token
+                        headers: {
+                          "Content-Type": "application/json",
+                          Authorization: "Bearer " + reduxAuth.user.token,
+                        },
+                        data: {
+                          fullName: fullName,
+                          addressOne: addressOne,
+                          addressTwo: addressTwo,
+                          city: city,
+                          state: state,
+                          zip: zip,
+                        },
+                      })
+                        .then((res) => {
+                          if (res.data.success) {
+                            toast.success("Profile Saved!");
+                          }
+                          if (res.data.error) {
+                            toast.error(res.data.error);
+                          }
+                        })
+                        .catch((err) => console.log(err));
                     }}
                   >
                     Submit

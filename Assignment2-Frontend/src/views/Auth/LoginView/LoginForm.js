@@ -1,21 +1,16 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import { useHistory } from "react-router";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import {
-  Box,
-  Button,
-  TextField,
-  FormHelperText,
-  makeStyles,
-} from "@material-ui/core";
+import { Box, Button, TextField, makeStyles } from "@material-ui/core";
 
+import { storeUSER } from "../../../redux/actions/AuthAction/AuthActions";
 toast.configure({
-  autoClose: 5000,
+  autoClose: 3000,
   hideProgressBar: false,
   closeOnClick: true,
   pauseOnHover: true,
@@ -27,18 +22,17 @@ const useStyles = makeStyles(() => ({
 }));
 
 function LoginForm({ onSubmitSuccess }) {
-  const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
-
-  const [email, setEmail] = React.useState(" ");
-  const [password, setPassword] = React.useState(" ");
+  const reduxAuth = useSelector((state) => state.auth);
+  const [email, setEmail] = React.useState();
+  const [password, setPassword] = React.useState();
 
   return (
     <Formik
       initialValues={{
-        email: "",
-        password: "",
+        email: null,
+        password: null,
       }}
       validationSchema={Yup.object().shape({
         email: Yup.string()
@@ -93,19 +87,25 @@ function LoginForm({ onSubmitSuccess }) {
               type="submit"
               variant="contained"
               onClick={() => {
-                axios
-                  .post("http://localhost:8080/auth/login", {
+                axios({
+                  method: "POST",
+                  url: "http://localhost:8080/auth/login",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  data: {
                     email: email,
                     password: password,
-                  })
+                  },
+                })
                   .then((res) => {
+                    dispatch(storeUSER(res.data));
                     if (res.data.success) {
                       //push to home page
                       history.push("/app/home");
-                      console.log(res.data);
-                    } else {
-                      console.log(res.data);
-                      toast.error("Error Logging In! Try Again!");
+                    }
+                    if (res.data.error) {
+                      toast.error(res.data.error);
                     }
                   })
                   .catch((err) => console.log(err));

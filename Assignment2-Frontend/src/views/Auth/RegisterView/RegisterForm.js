@@ -19,7 +19,7 @@ import {
 } from "@material-ui/core";
 
 toast.configure({
-  autoClose: 5000,
+  autoClose: 3000,
   hideProgressBar: false,
   closeOnClick: true,
   pauseOnHover: true,
@@ -34,14 +34,14 @@ function RegisterForm() {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const [email, setEmail] = React.useState(" ");
-  const [password, setPassword] = React.useState(" ");
+  const [email, setEmail] = React.useState();
+  const [password, setPassword] = React.useState();
 
   return (
     <Formik
       initialValues={{
-        email: "",
-        password: "",
+        email: null,
+        password: null,
       }}
       validationSchema={Yup.object().shape({
         email: Yup.string()
@@ -105,9 +105,9 @@ function RegisterForm() {
                     if (res.data.success) {
                       //push to home page
                       history.push("/login");
-                    } else {
-                      console.log(res.data);
-                      toast.error("Error Registering! Try Again!");
+                    }
+                    if (res.data.error) {
+                      toast.error(res.data.error);
                     }
                   })
                   .catch((err) => console.log(err));

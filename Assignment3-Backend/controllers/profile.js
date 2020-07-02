@@ -1,5 +1,5 @@
 const { validationResult } = require("express-validator/check");
-const Profile = require("../models/profile.txt");
+const Profile = require("../models/profile");
 
 exports.getProfile = (req, res, next) => {
   //find user profile based on fullName
@@ -9,9 +9,9 @@ exports.getProfile = (req, res, next) => {
   }).then((profile) => {
     //if we don't find a email, user doesn't exist
     if (!profile) {
-      res.status(422).json({ result: "Profile not Found" });
+      res.json({ error: "Profile not Found" });
     } else {
-      res.status(200).json({ result: profile });
+      res.status(200).json({ success: "Profile found", profile: profile });
     }
   });
 };
@@ -27,10 +27,12 @@ exports.postProfile = (req, res, next) => {
   //check if any validation errors, send back to frontend
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(422).json({
-      errorMessage: errors.array()[0].msg,
+    return res.json({
+      error: errors.array()[0].msg,
     });
   }
+
+  res.status(200).json({ success: "Profile added SUCCESS" });
 
   //add Profile To Database //Need Assignment 4 to complete
   let profile = new Profile({

@@ -19,7 +19,7 @@ function HomePage() {
   return (
     <Grid container className={classes.background}>
       <section className={style.top}>
-        <div class="centered">
+        <div className="centered">
           Pioneering the petroleum industry with professional, cost effective
           solutions{" "}
         </div>
