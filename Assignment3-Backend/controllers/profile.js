@@ -1,6 +1,8 @@
 const { validationResult } = require("express-validator/check");
 const Profile = require("../database/profile");
 
+// Profile.createProfileTable().then().catch()
+
 exports.getProfile = (req, res, next) => {
   //find user profile based on fullName
   let fullName = req.body.fullName;

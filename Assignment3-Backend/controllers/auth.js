@@ -3,6 +3,8 @@ const bcrypt = require("bcryptjs");
 const { validationResult } = require("express-validator/check");
 const jwt = require("jsonwebtoken");
 
+// User.createUserTable().then().catch();
+
 exports.postLogin = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
@@ -79,7 +81,6 @@ exports.postRegister = (req, res, next) => {
 
   //Send back dummy since no dabtabase
   res.status(200).json({ success: "User Succesfully Saved" });
-
 
   //  @TODO: Need assignment4 hashPassword and add user to Database
   // bcrypt
