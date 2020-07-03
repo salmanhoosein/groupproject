@@ -2,8 +2,7 @@ const express = require("express");
 const profileController = require("../controllers/profile");
 const router = express.Router();
 const { check } = require("express-validator/check");
-const authToken = require("../utils/isAuth");
-
+const authToken = require("./protection");
 
 //add profile to database
 router.post(

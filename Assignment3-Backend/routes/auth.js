@@ -3,13 +3,13 @@ const authController = require("../controllers/auth");
 const router = express.Router();
 const { check } = require("express-validator/check");
 
-const User = require("../models/user");
+const User = require("../database/user");
+
+
 router.post(
   "/login",
   [
-    check("email")
-      .isEmail()
-      .withMessage("Enter a valid email"),
+    check("email").isEmail().withMessage("Enter a valid email"),
     check("password", "Invalid Password").isLength({
       min: 1,
     }),
@@ -28,7 +28,7 @@ router.post(
       })
       .normalizeEmail(), //make all lowercase //Sanitizing
     // .custom((value, { req }) => {
-    //   return User.findOne({
+    //   return User.findByEmail({
     //     email: value, //if email is found
     //   }).then((userDoc) => {
     //     //if email exists in system, send error

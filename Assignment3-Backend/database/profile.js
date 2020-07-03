@@ -1,4 +1,4 @@
-const db = require("../utils/db");
+const db = require("./connection");
 
 module.exports = class Profile {
   constructor(fullName, addressOne, addressTwo, city, state, zip) {

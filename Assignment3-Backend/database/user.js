@@ -16,6 +16,7 @@ module.exports = class User {
   static fetchAll() {
     return db.execute("SELECT * FROM profile");
   }
+
   static findByEmail(email) {
     return db.execute();
   }
