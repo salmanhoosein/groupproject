@@ -4,6 +4,7 @@ const router = express.Router();
 const { check } = require("express-validator/check");
 const authToken = require("../utils/isAuth");
 
+
 //add profile to database
 router.post(
   "/add",

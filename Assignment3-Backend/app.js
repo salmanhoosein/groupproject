@@ -15,6 +15,9 @@ app.use(bodyParser.json());
 app.use(cors());
 
 //Routes
+app.get("/", (req, res, next) => {
+  res.status(200).send("Welcome to 4353 Group Project");
+});
 app.use("/profile", profileRoutes);
 app.use("/auth", authRoutes);
 

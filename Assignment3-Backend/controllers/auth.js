@@ -1,4 +1,4 @@
-const User = require("../models/user");
+const User = require("../database/user");
 const bcrypt = require("bcryptjs");
 const { validationResult } = require("express-validator/check");
 const jwt = require("jsonwebtoken");
@@ -16,20 +16,18 @@ exports.postLogin = (req, res, next) => {
     });
   }
 
-  //hardcoded data without database
+  //send hardcoded data without database
   const token = jwt.sign({ email: email }, "AuthSecretToken");
   res.status(200).json({
     token: token,
     email: email,
     success: "User Logged In",
-  }); // need to be sure session is saved in some scenarios
+  });
 
-  //@TODO: implement database assignment 4
+  /*@TODO: implement database assignment 4
   let loggedInUser;
   // find user in database and create a session for that user
-  User.findOne({
-    email: email,
-  })
+  User.findByEmail(email)
     .then((user) => {
       //if we don't find a email, user doesn't exist
       if (!user) {
@@ -62,6 +60,7 @@ exports.postLogin = (req, res, next) => {
       //res.json({ error: "Passwords dont match" });
     })
     .catch((err) => console.log(err));
+  */
 };
 
 exports.postRegister = (req, res, next) => {
@@ -78,32 +77,24 @@ exports.postRegister = (req, res, next) => {
     });
   }
 
-  console.log(email);
-  console.log(password);
-
+  //Send back dummy since no dabtabase
   res.status(200).json({ success: "User Succesfully Saved" });
 
-  // hashPassword and add user to Database
-  bcrypt
-    .hash(password, 12) //hash password if email doesn't exist
-    .then((hashedPassword) => {
-      /*
-      //add user to database
-      const user = new User({
-        email: email,
-        password: hashedPassword, //use hashedPassword
-      });
-      //save new user in database
-      return user.save();
-      */
 
-      console.log(hashedPassword);
-    })
-    .then((result) => {
-      //redirect before sending email
-      // res.status(200).json({ success: "User Succesfully Saved" });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  //  @TODO: Need assignment4 hashPassword and add user to Database
+  // bcrypt
+  //   .hash(password, 12) //hash password if email doesn't exist
+  //   .then((hashedPassword) => {
+  //     /* add user to DB */
+  //     const user = new User(email, hashedPassword);
+  //     return user.save();
+  //   })
+  //   .then((result) => {
+  //     //redirect before sending email
+  //     res.status(200).json({ success: "User Succesfully Saved" });
+  //   })
+  //   .catch((err) => {
+  //     res.json({ error: "Error saving user" });
+  //     console.log(err);
+  //   });
 };

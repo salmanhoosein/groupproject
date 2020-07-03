@@ -1,19 +1,34 @@
 const { validationResult } = require("express-validator/check");
-const Profile = require("../models/profile");
+const Profile = require("../database/profile");
 
 exports.getProfile = (req, res, next) => {
   //find user profile based on fullName
   let fullName = req.body.fullName;
-  Profile.findOne({
-    fullName: fullName,
-  }).then((profile) => {
-    //if we don't find a email, user doesn't exist
-    if (!profile) {
-      res.json({ error: "Profile not Found" });
-    } else {
-      res.status(200).json({ success: "Profile found", profile: profile });
-    }
+
+  res.status(200).json({
+    profile: {
+      fullName: "jane doe",
+      addressOne: "1234 Test Address",
+      addressTwo: "1234 second address",
+      city: "Houston",
+      state: "TX",
+      zip: "77099",
+    },
   });
+
+  /* @TODO: NEED ASSIGNMENT 4 DATABASE
+  Profile.findByName(fullName)
+    .then((profile) => {
+      if (!profile) {
+        res.json({ error: "Profile not Found" });
+      } else {
+        res.status(200).json({ success: "Profile found", profile: profile });
+      }
+    })
+    .catch((err) => {
+      res.json({ error: "Profile not Found" });
+    });
+  */
 };
 
 exports.postProfile = (req, res, next) => {
@@ -32,20 +47,18 @@ exports.postProfile = (req, res, next) => {
     });
   }
 
+  //send dummy data since no db
   res.status(200).json({ success: "Profile added SUCCESS" });
 
-  //add Profile To Database //Need Assignment 4 to complete
-  let profile = new Profile({
-    fullName: fullName,
-    addressOne: addressOne,
-    addressTwo: addressTwo,
-    city: city,
-    state: state,
-    zip: zip,
-  });
-
-  profile.save().then((result) => {
-    //return success after adding
-    res.status(200).json({ result: "Profile added SUCCESS" });
-  });
+  /*@TODO: Need Assignment 4 Database
+  let profile = new Profile(fullName, addressOne, addressTwo, city, state, zip);
+  profile
+    .save()
+    .then((result) => {
+      res.status(200).json({ result: "Profile added SUCCESS" });
+    })
+    .catch((err) => {
+      res.json({ error: "Error adding profile" });
+    });
+  */
 };
