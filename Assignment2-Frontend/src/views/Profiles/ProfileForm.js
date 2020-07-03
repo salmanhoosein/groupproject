@@ -241,17 +241,11 @@ function InfoForm(props) {
                     type="submit"
                     variant="contained"
                     onClick={() => {
-                      //get token from redux, if user refreshed then from localstorage
-                      let token = reduxAuth.user.token
-                        ? reduxAuth.user.token
-                        : localStorage.getItem("authtoken");
                       axios({
                         method: "POST",
                         url: "http://localhost:8080/profile/add",
-                        //send data with JWT Auth token
                         headers: {
                           "Content-Type": "application/json",
-                          Authorization: "Bearer " + token,
                         },
                         data: {
                           fullName: fullName,

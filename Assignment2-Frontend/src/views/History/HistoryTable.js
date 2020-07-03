@@ -8,6 +8,9 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 
+import axios from "axios";
+import { toast } from "react-toastify";
+
 const useStyles = makeStyles({
   table: {
     border: "2px solid black",
@@ -18,53 +21,39 @@ const useStyles = makeStyles({
   },
 });
 
-const data = [
-  {
-    gallons: 1,
-    DeliveryDate: "01-12-12",
-    Price: 12,
-    AmountDue: 12,
-    DeliveryAddress: "123 test address",
-  },
-  {
-    gallons: 1,
-    DeliveryDate: "01-12-12",
-    Price: 12,
-    AmountDue: 12,
-    DeliveryAddress: "123 test address",
-  },
-  {
-    gallons: 1,
-    DeliveryDate: "01-12-12",
-    Price: 12,
-    AmountDue: 12,
-    DeliveryAddress: "123 test address",
-  },
-  {
-    gallons: 1,
-    DeliveryDate: "01-12-12",
-    Price: 12,
-    AmountDue: 12,
-    DeliveryAddress: "123 test address",
-  },
-  {
-    gallons: 1,
-    DeliveryDate: "01-12-12",
-    Price: 12,
-    AmountDue: 12,
-    DeliveryAddress: "123 test address",
-  },
-  {
-    gallons: 1,
-    DeliveryDate: "01-12-12",
-    Price: 12,
-    AmountDue: 12,
-    DeliveryAddress: "123 test address",
-  },
-];
+toast.configure({
+  autoClose: 1000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+});
 
 export default function HistoryTable() {
   const classes = useStyles();
+  const [data, setData] = React.useState([]);
+
+  //get profile from database
+  React.useEffect(() => {
+    axios({
+      method: "GET",
+      url: "http://localhost:8080/fuelform/get",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        if (res.data.success) {
+          console.log(res.data.quotes);
+          setData(res.data.quotes);
+          toast.success("Quotes Retrieved from DB!");
+        }
+        if (res.data.error) {
+          toast.error(res.data.error);
+        }
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <Table className={classes.table} aria-label="simple table">
@@ -80,11 +69,11 @@ export default function HistoryTable() {
       <TableBody>
         {data.map((row, index) => (
           <TableRow key={index}>
-            <TableCell>{row.gallons}</TableCell>
-            <TableCell>{row.DeliveryDate}</TableCell>
-            <TableCell>{row.Price}</TableCell>
-            <TableCell>{row.AmountDue}</TableCell>
-            <TableCell>{row.DeliveryAddress}</TableCell>
+            <TableCell>{row.gallonsRequested}</TableCell>
+            <TableCell>{row.deliveryDate}</TableCell>
+            <TableCell>{row.price}</TableCell>
+            <TableCell>{row.amountDue}</TableCell>
+            <TableCell>{row.deliveryAddress}</TableCell>
           </TableRow>
         ))}
       </TableBody>

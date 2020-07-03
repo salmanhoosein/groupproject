@@ -20,10 +20,10 @@ import {
 } from "@material-ui/core";
 
 toast.configure({
-  autoClose: 3000,
+  autoClose: 1000,
   hideProgressBar: false,
   closeOnClick: true,
-  pauseOnHover: true,
+  pauseOnHover: true, 
   draggable: true,
 });
 const useStyles = makeStyles((theme) => ({
@@ -42,7 +42,6 @@ const useStyles = makeStyles((theme) => ({
 
 function FQFORM(props) {
   const classes = useStyles();
-  const reduxAuth = useSelector((state) => state.auth);
   const [gallonsRequested, setGallonsRequested] = React.useState();
   const [deliveryAddress, setDeliveryAddress] = React.useState();
   const [deliveryDate, setDeliveryDate] = React.useState();
@@ -51,23 +50,17 @@ function FQFORM(props) {
 
   //get profile from database
   React.useEffect(() => {
-    //get token from redux, if user refreshed then from localstorage
-   let token = reduxAuth.user.token
-      ? reduxAuth.user.token
-      : localStorage.getItem("authtoken");
     axios({
       method: "GET",
-      url: "http://localhost:8080/profile/retrieve",
-      //get data with JWT Auth token
+      url: "http://localhost:8080/profile/get",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
       },
     })
       .then((res) => {
+        console.log(res);
         if (res.data.success) {
-          // setDeliveryAddress(res.data.profile.deliveryAddress);
-          setDeliveryAddress("test address");
+          setDeliveryAddress(res.data.profile.addressOne);
           toast.success("Profile Retrieved from DB!");
         }
         if (res.data.error) {
@@ -174,7 +167,6 @@ function FQFORM(props) {
                     variant="outlined"
                     onChange={(event) => {
                       handleChange(event);
-
                       setAmountDue(event.target.value);
                     }}
                     value={values.totalAmountDue}
@@ -206,6 +198,31 @@ function FQFORM(props) {
                     size="large"
                     type="submit"
                     variant="contained"
+                    onClick={() => {
+                      axios({
+                        method: "POST",
+                        url: "http://localhost:8080/fuelform/add",
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                        data: {
+                          gallonsRequested: gallonsRequested,
+                          deliveryAddress: deliveryAddress,
+                          deliveryDate: deliveryDate,
+                          price: price,
+                          amountDue: amountDue,
+                        },
+                      })
+                        .then((res) => {
+                          if (res.data.success) {
+                            toast.success("Form Saved!");
+                          }
+                          if (res.data.error) {
+                            toast.error(res.data.error);
+                          }
+                        })
+                        .catch((err) => console.log(err));
+                    }}
                   >
                     Submit
                   </Button>
