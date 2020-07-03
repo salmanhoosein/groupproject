@@ -4,6 +4,7 @@ const cors = require("cors");
 
 const profileRoutes = require("./routes/profile");
 const authRoutes = require("./routes/auth");
+const fuelformRoutes = require("./routes/fuelform");
 
 const app = express();
 app.use(
@@ -20,6 +21,7 @@ app.get("/", (req, res, next) => {
 });
 app.use("/profile", profileRoutes);
 app.use("/auth", authRoutes);
+app.use("/fuelform",fuelformRoutes);
 
 //Error Routes
 app.use("/", (req, res, next) => {
