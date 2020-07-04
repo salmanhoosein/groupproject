@@ -1,7 +1,6 @@
 const User = require("../database/user");
 const bcrypt = require("bcryptjs");
 const { validationResult } = require("express-validator/check");
-const jwt = require("jsonwebtoken");
 
 // User.createUserTable().then().catch();
 
@@ -19,9 +18,7 @@ exports.postLogin = (req, res, next) => {
   }
 
   //send hardcoded data without database
-  const token = jwt.sign({ email: email }, "AuthSecretToken");
   res.status(200).json({
-    token: token,
     email: email,
     success: "User Logged In",
   });

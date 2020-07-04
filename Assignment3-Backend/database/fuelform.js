@@ -1,12 +1,17 @@
 const db = require("./connection");
 
 module.exports = class FuelForm {
-  constructor(gallonsRequested, deliveryAddress, deliveryDate,price,state, amountDue) {
+  constructor(
+    gallonsRequested,
+    deliveryAddress,
+    deliveryDate,
+    price,
+    amountDue
+  ) {
     this.gallonsRequested = gallonsRequested;
     this.deliveryAddress = deliveryAddress;
     this.deliveryDate = deliveryDate;
     this.price = price;
-    this.state = state;
     this.amountDue = amountDue;
   }
 

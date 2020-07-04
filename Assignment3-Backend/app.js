@@ -21,7 +21,7 @@ app.get("/", (req, res, next) => {
 });
 app.use("/profile", profileRoutes);
 app.use("/auth", authRoutes);
-app.use("/fuelform",fuelformRoutes);
+app.use("/fuelform", fuelformRoutes);
 
 //Error Routes
 app.use("/", (req, res, next) => {

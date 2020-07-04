@@ -8,6 +8,7 @@ exports.getProfile = (req, res, next) => {
   let fullName = req.body.fullName;
 
   res.status(200).json({
+    success: "Profile found",
     profile: {
       fullName: "jane doe",
       addressOne: "1234 Test Address",
