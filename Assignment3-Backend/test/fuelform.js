@@ -14,9 +14,10 @@ let defaultUser = {
 
 let fuelForm = {
   gallonsRequested: 99,
+  price: 100,
   deliveryAddress: "1234 Test Address",
   deliveryDate: "7/03/2020",
-  amountDue: "$99,000.00",
+  amountDue: 12312,
 };
 
 // test fuelform  routes
@@ -79,11 +80,24 @@ describe("Testing FuelForm Routes", () => {
 
   it("it should NOT ADD a fuelform without valid gallonsRequested field", (done) => {
     let noGal = JSON.parse(JSON.stringify(fuelForm));
-    noGal.gallonsRequested = null;
+    noGal.gallonsRequested = -1;
     chai
       .request(app)
       .post("/fuelform/add")
       .send(noGal)
+      .set("Authorization", "Bearer " + token)
+      .end((err, res) => {
+        res.body.should.have.property("error");
+        done();
+      });
+  });
+  it("it should NOT ADD a fuelform without valid price field", (done) => {
+    let noPrice = JSON.parse(JSON.stringify(fuelForm));
+    noPrice.price = null;
+    chai
+      .request(app)
+      .post("/fuelform/add")
+      .send(noPrice)
       .set("Authorization", "Bearer " + token)
       .end((err, res) => {
         res.body.should.have.property("error");
@@ -120,7 +134,7 @@ describe("Testing FuelForm Routes", () => {
   });
   it("it should NOT ADD a fuelform without valid amountDue field", (done) => {
     let noAmountDue = JSON.parse(JSON.stringify(fuelForm));
-    noAmountDue.amountDue = null;
+    noAmountDue.amountDue = -2;
     chai
       .request(app)
       .post("/fuelform/add")

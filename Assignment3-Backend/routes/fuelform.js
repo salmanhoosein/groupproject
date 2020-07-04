@@ -14,12 +14,14 @@ router.post(
         min: 1,
         max: 50,
       })
+      .isInt({ gt: 0 })
       .withMessage("Gallons requested is required"),
     check("deliveryAddress")
       .isLength({
         min: 1,
         max: 100,
       })
+
       .withMessage("Delivery address is required"),
     check("deliveryDate")
       .isLength({
@@ -32,12 +34,14 @@ router.post(
         min: 1,
         max: 100,
       })
+      .isInt({ gt: 0 })
       .withMessage("Price is required"),
     check("amountDue")
       .isLength({
         min: 1,
         max: 100,
       })
+      .isInt({ gt: 0 })
       .withMessage("Amount due is required"),
   ],
   fuelformController.postFuelQuotes

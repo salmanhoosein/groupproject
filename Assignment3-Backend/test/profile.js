@@ -77,6 +77,20 @@ describe("Testing Profile Routes ", () => {
         done();
       });
   });
+  it("it should  ADD a profile without valid address Two", (done) => {
+    let noAddrTwo = JSON.parse(JSON.stringify(profile));
+    noAddrTwo.addressTwo = null;
+    chai
+      .request(app)
+      .post("/profile/add")
+      .set("Authorization", "Bearer " + token)
+      .send(noAddrTwo)
+      .end((err, res) => {
+        res.should.have.status(200);
+        expect(res.body.success).to.equal("Profile added SUCCESS");
+        done();
+      });
+  });
   it("it should NOT ADD a profile without valid zip field", (done) => {
     let noZip = JSON.parse(JSON.stringify(profile));
     noZip.zip = null;
