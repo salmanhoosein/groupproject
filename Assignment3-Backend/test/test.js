@@ -5,8 +5,10 @@ const should = chai.should();
 const expect = chai.expect;
 const chaiHttp = require("chai-http");
 const app = require("../app");
-const profileModule = require("../controllers/profile");
-
+const profileModule = require("../database/profile");
+const fuelFormModule = require("../database/fuelform");
+const userModule = require("../database/user");
+const register = require("../controllers/auth")
 const userCredentials = {
   email: "user123@gmail.com",
   password: "password123",
@@ -46,15 +48,29 @@ describe("Testing API ", () => {
         });
     });
 
+
+       it("It should register a new User", (done)  => {
+        const newUser = {
+          email: "newuser@gmail.com",
+          password: "newpassword",
+        };
+    chai.request(app)
+        .post("/auth/register")
+        .end(function (err, response) {
+      expect(response.statusCode).to.equal(200);
+      done();
+    });
+    });
+
     it("it should go to the GET profile page", (done) => {
       authenticatedUser
         .get("/profile/get")
 
         .end((err, res) => {
-          res.should.have.status(200);
-          console.log(res.body);
+          res.should.have.status(200);                
+          console.log(res.body.profile.fullName);
           res.body.should.be.a("object");
-
+          expect(res.body.profile.fullName).to.equal("jane doe");
           done();
         });
     });
@@ -71,13 +87,11 @@ describe("Testing API ", () => {
         });
     });
 
-    it("It should get a user", (done) => {
-      profileModule.getProfile();
-    });
+   
   });
 
-  // test post routes
-  describe("/POST", () => {
+  // test profile post routes
+  describe("/POST get", () => {
     it("it should not POST a profile without zip field", (done) => {
       let profile = {
         fullName: "John Doe",
@@ -98,5 +112,79 @@ describe("Testing API ", () => {
           done();
         });
     });
+  });
+
+  // test fuel form get routes
+  describe("GET /fuelform/get", () => {
+    it("it should go to the GET fuelForm page", (done) => {
+      authenticatedUser
+        .get("/fuelform/get")
+
+        .end((err, res) => {
+          console.log(res.body.quotes[0].gallonsRequested)
+          res.should.have.status(200);
+          res.body.should.be.a("object");
+          expect(res.body.quotes[0].gallonsRequested).to.equal(99);
+          done();
+        });
+    });
+  });
+
+  // test fuelform post routes
+
+  describe("/POST get", () => {
+  it("it should not POST a profile without price field", (done) => {
+      let  quotes =
+      {
+        gallonsRequested: 99,
+        deliveryAddress: "1234 Test Address",
+        deliveryDate: "7/03/2020",
+        amountDue: "$99,000.00",
+      };
+    
+      chai
+        .request(app)
+        .post("/fuelform/add")
+        .send(quotes)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a("object");
+          res.body.should.have.property("error");
+
+          done();
+          });
+      });
+
+
+    it("It should create a new fuelForm", (done) => {
+        
+        const fuelFormObject = new fuelFormModule(1,1,1,1,1);
+        fuelFormObject.save();
+        fuelFormModule.fetchAll();
+        console.log(fuelFormObject);
+
+        done();
+    });
+
+     it("It should create a new Profile", (done) => {
+        
+        const profileObject = new profileModule("John","123 st", "apt 100","Houston","TX","77077");
+        profileObject.save();
+        console.log(profileObject);
+        profileModule.fetchAll();
+        done();
+    });
+
+     it("It should create a new User", (done)  => {
+        const userObject = new userModule("username123","password123");
+        
+        userObject.save(); 
+        console.log(userObject);
+        userModule.findByEmail("password123");
+        userModule.fetchAll();
+        done();
+       
+    });
+
   });
 });

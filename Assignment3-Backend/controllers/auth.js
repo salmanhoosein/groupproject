@@ -66,7 +66,7 @@ exports.postRegister = (req, res, next) => {
   //retreive data from request body
   const email = req.body.email;
   const password = req.body.password;
-
+  
   //check validation errors
   const errors = validationResult(req);
   //if there are errors in input
