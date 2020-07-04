@@ -20,10 +20,10 @@ import {
 } from "@material-ui/core";
 
 toast.configure({
-  autoClose: 1000,
+  autoClose: 2000,
   hideProgressBar: false,
   closeOnClick: true,
-  pauseOnHover: true, 
+  pauseOnHover: true,
   draggable: true,
 });
 const useStyles = makeStyles((theme) => ({
@@ -48,13 +48,20 @@ function FQFORM(props) {
   const [price, setPrice] = React.useState();
   const [amountDue, setAmountDue] = React.useState();
 
+  const reduxAuth = useSelector(state => state.auth)
+
   //get profile from database
   React.useEffect(() => {
+    //get token from redux, if user refreshed then from localstorage
+    let token = reduxAuth.user.token
+      ? reduxAuth.user.token
+      : localStorage.getItem("authtoken");
     axios({
       method: "GET",
       url: "http://localhost:8080/profile/get",
       headers: {
         "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
       },
     })
       .then((res) => {
@@ -199,11 +206,16 @@ function FQFORM(props) {
                     type="submit"
                     variant="contained"
                     onClick={() => {
+                      //get token from redux, if user refreshed then from localstorage
+                      let token = reduxAuth.user.token
+                        ? reduxAuth.user.token
+                        : localStorage.getItem("authtoken");
                       axios({
                         method: "POST",
                         url: "http://localhost:8080/fuelform/add",
                         headers: {
                           "Content-Type": "application/json",
+                          Authorization: "Bearer " + token,
                         },
                         data: {
                           gallonsRequested: gallonsRequested,

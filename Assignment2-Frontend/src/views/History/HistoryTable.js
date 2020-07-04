@@ -7,6 +7,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import { useSelector } from "react-redux";
 
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -22,7 +23,7 @@ const useStyles = makeStyles({
 });
 
 toast.configure({
-  autoClose: 1000,
+  autoClose: 2000,
   hideProgressBar: false,
   closeOnClick: true,
   pauseOnHover: true,
@@ -32,14 +33,20 @@ toast.configure({
 export default function HistoryTable() {
   const classes = useStyles();
   const [data, setData] = React.useState([]);
+  const reduxAuth = useSelector((state) => state.auth);
 
   //get profile from database
   React.useEffect(() => {
+    //get token from redux, if user refreshed then from localstorage
+    let token = reduxAuth.user.token
+      ? reduxAuth.user.token
+      : localStorage.getItem("authtoken");
     axios({
       method: "GET",
       url: "http://localhost:8080/fuelform/get",
       headers: {
         "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
       },
     })
       .then((res) => {
