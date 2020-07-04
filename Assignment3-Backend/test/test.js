@@ -57,8 +57,8 @@ describe("Testing API ", () => {
     chai.request(app)
         .post("/auth/register")
         .end(function (err, response) {
-      expect(response.statusCode).to.equal(200);
-      done();
+         expect(response.statusCode).to.equal(200);
+        done();
     });
     });
 
@@ -89,9 +89,32 @@ describe("Testing API ", () => {
 
    
   });
-
   // test profile post routes
-  describe("/POST get", () => {
+  describe("/POST ", () => {
+    it("it should create a new profile", (done) => {
+      let profile = {
+        fullName: "John Doe",
+        addressOne: "321 St",
+        addressTwo: "123",
+        city: "Houston",
+        state: "TX",
+        zip: "77050"
+      };
+      chai
+        .request(app)
+        .post("/profile/add")
+        .send(profile)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a("object");
+          expect(res.body.success).to.equal("Profile added SUCCESS");
+
+          done();
+        });
+    });
+  });
+
+
     it("it should not POST a profile without zip field", (done) => {
       let profile = {
         fullName: "John Doe",
@@ -112,7 +135,7 @@ describe("Testing API ", () => {
           done();
         });
     });
-  });
+
 
   // test fuel form get routes
   describe("GET /fuelform/get", () => {
