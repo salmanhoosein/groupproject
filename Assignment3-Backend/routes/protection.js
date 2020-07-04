@@ -2,7 +2,11 @@ const JSONwebToken = require("jsonwebtoken");
 
 module.exports = (req, res, next) => {
   //check if header exists
+
+
   const authHeader = req.get("Authorization");
+
+  
 
   if (!authHeader) {
     return res.json({ error: "Not Authenticated" });
