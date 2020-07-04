@@ -2,10 +2,12 @@ const express = require("express");
 const fuelformController = require("../controllers/fuelform");
 const router = express.Router();
 const { check } = require("express-validator/check");
+const authGuard = require("./protection");
 
 //add fuel quote to database
 router.post(
   "/add",
+  authGuard,
   [
     check("gallonsRequested")
       .isLength({
@@ -42,6 +44,6 @@ router.post(
 );
 
 //get details about fuelQuotes from database
-router.get("/get", fuelformController.getFuelQuotes);
+router.get("/get", authGuard, fuelformController.getFuelQuotes);
 
 module.exports = router;

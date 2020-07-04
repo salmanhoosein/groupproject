@@ -2,10 +2,11 @@ const express = require("express");
 const profileController = require("../controllers/profile");
 const router = express.Router();
 const { check } = require("express-validator/check");
-
+const authGuard = require("./protection");
 //add profile to database
 router.post(
   "/add",
+  authGuard,
   [
     check("fullName")
       .isLength({
@@ -47,6 +48,6 @@ router.post(
 );
 
 //get details about profile from database
-router.get("/get", profileController.getProfile);
+authGuard, router.get("/get", authGuard, profileController.getProfile);
 
 module.exports = router;
