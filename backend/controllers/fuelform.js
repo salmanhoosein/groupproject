@@ -49,13 +49,13 @@ exports.postFuelQuotes = (req, res, next) => {
   //check if any validation errors, send back to frontend
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(417).json({
+    return res.json({
       error: errors.array()[0].msg,
     });
   }
 
   //send dummy data since no db
-  res.status(200).json({ success: "Fuel Quote added SUCCESS" });
+  res.status(201).json({ success: "Fuel Quote added SUCCESS" });
 
   /*@TODO: Need Assignment 4 Database
   let form = new FuelForm(fullName, addressOne, addressTwo, city, zip);

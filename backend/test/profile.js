@@ -60,7 +60,7 @@ describe("Testing Profile Routes ", () => {
       .set("Authorization", "Bearer " + token)
       .send(profile)
       .end((err, res) => {
-        res.should.have.status(200);
+        res.should.have.status(201);
         res.body.should.have.property("success");
         done();
       });
@@ -85,7 +85,7 @@ describe("Testing Profile Routes ", () => {
       .set("Authorization", "Bearer " + token)
       .send(noAddrTwo)
       .end((err, res) => {
-        res.should.have.status(200);
+        res.should.have.status(201);
         res.body.should.have.property("success");
         done();
       });

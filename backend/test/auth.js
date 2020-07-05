@@ -18,7 +18,7 @@ describe("Testing Auth Routes", () => {
       .post("/auth/register")
       .send(newUser)
       .end(function (err, res) {
-        res.should.have.status(200);
+        res.should.have.status(201);
         res.body.should.have.property("success");
         done();
       });

@@ -51,7 +51,7 @@ exports.postProfile = (req, res, next) => {
   }
 
   //send dummy data since no db
-  res.status(200).json({ success: "Profile added SUCCESS" });
+  res.status(201).json({ success: "Profile added SUCCESS" });
 
   /*@TODO: Need Assignment 4 Database
   let profile = new Profile(fullName, addressOne, addressTwo, city, state, zip);

@@ -79,7 +79,7 @@ exports.postRegister = (req, res, next) => {
   }
 
   //Send back dummy since no dabtabase
-  res.status(200).json({ success: "User Succesfully Saved" });
+  res.status(201).json({ success: "User Succesfully Saved" });
 
   //  @TODO: Need assignment4 hashPassword and add user to Database
   // bcrypt

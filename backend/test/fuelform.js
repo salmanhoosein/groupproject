@@ -71,7 +71,7 @@ describe("Testing FuelForm Routes", () => {
       .set("Authorization", "Bearer " + token)
       .send(fuelForm)
       .end((err, res) => {
-        res.should.have.status(200);
+        res.should.have.status(201);
         done();
       });
   });
