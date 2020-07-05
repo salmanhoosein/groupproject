@@ -19,10 +19,6 @@ module.exports = (req, res, next) => {
     return res.json({ error: "Not Authenticated Secret Doesn't Match" });
   }
 
-  //check if token is verified
-  if (!decodedToken) {
-    return res.json({ error: "Not Authenticated Token Not Verified" });
-  }
 
   next();
 };
