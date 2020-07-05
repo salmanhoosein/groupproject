@@ -46,6 +46,7 @@ describe("Testing Pricing Routes", () => {
       .request(app)
       .post("/pricing/get")
       .set("Authorization", "Bearer " + token)
+      .send(fuelForm)
       .end((err, res) => {
         res.should.have.status(200);
         res.body.should.have.property("success");
@@ -66,43 +67,41 @@ describe("Testing Pricing Routes", () => {
       });
   });
 
-  it("it should NOT ADD a fuelform without valid gallonsRequested field", (done) => {
+  it("it should NOT GET the pricing without valid gallonsRequested field", (done) => {
     let noGal = JSON.parse(JSON.stringify(fuelForm));
     noGal.gallonsRequested = -1;
     chai
       .request(app)
-      .post("/fuelform/add")
-      .send(noGal)
+      .post("/pricing/get")
       .set("Authorization", "Bearer " + token)
+      .send(noGal)
       .end((err, res) => {
         res.body.should.have.property("error");
         done();
       });
   });
 
-  it("it should NOT ADD a fuelform without valid deliveryAddress field", (done) => {
+  it("it should NOT GET the pricing without valid deliveryAddress field", (done) => {
     let noDelAddr = JSON.parse(JSON.stringify(fuelForm));
     noDelAddr.deliveryAddress = null;
     chai
       .request(app)
-      .post("/fuelform/add")
-      .send(noDelAddr)
+      .post("/pricing/get")
       .set("Authorization", "Bearer " + token)
-
+      .send(noDelAddr)
       .end((err, res) => {
         res.body.should.have.property("error");
         done();
       });
   });
-  it("it should NOT ADD a fuelform without valid deliveryDate field", (done) => {
+  it("it should NOT GET the pricing without valid deliveryDate field", (done) => {
     let noDelDate = JSON.parse(JSON.stringify(fuelForm));
     noDelDate.deliveryDate = null;
     chai
       .request(app)
-      .post("/fuelform/add")
-      .send(noDelDate)
+      .post("/pricing/get")
       .set("Authorization", "Bearer " + token)
-
+      .send(noDelDate)
       .end((err, res) => {
         res.body.should.have.property("error");
         done();

@@ -110,7 +110,10 @@ function LoginForm({ onSubmitSuccess }) {
                       toast.error(res.data.error);
                     }
                   })
-                  .catch((err) => console.log(err));
+                  .catch((err) => {
+                    toast.error(err)
+                    console.log(err);
+                  });
               }}
             >
               Log In

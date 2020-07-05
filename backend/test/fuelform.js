@@ -15,7 +15,7 @@ let fuelForm = {
   deliveryAddress: "1234 Test Address",
   deliveryDate: "7/03/2020",
   amountDue: 12312,
-  price: 100,
+  price: 1,
 };
 
 // test fuelform  routes
@@ -68,8 +68,8 @@ describe("Testing FuelForm Routes", () => {
     chai
       .request(app)
       .post("/fuelform/add")
-      .send(fuelForm)
       .set("Authorization", "Bearer " + token)
+      .send(fuelForm)
       .end((err, res) => {
         res.should.have.status(200);
         done();
@@ -82,8 +82,8 @@ describe("Testing FuelForm Routes", () => {
     chai
       .request(app)
       .post("/fuelform/add")
-      .send(noGal)
       .set("Authorization", "Bearer " + token)
+      .send(noGal)
       .end((err, res) => {
         res.body.should.have.property("error");
         done();
@@ -96,9 +96,8 @@ describe("Testing FuelForm Routes", () => {
     chai
       .request(app)
       .post("/fuelform/add")
-      .send(noDelAddr)
       .set("Authorization", "Bearer " + token)
-
+      .send(noDelAddr)
       .end((err, res) => {
         res.body.should.have.property("error");
         done();
@@ -110,9 +109,8 @@ describe("Testing FuelForm Routes", () => {
     chai
       .request(app)
       .post("/fuelform/add")
-      .send(noDelDate)
       .set("Authorization", "Bearer " + token)
-
+      .send(noDelDate)
       .end((err, res) => {
         res.body.should.have.property("error");
         done();
@@ -124,8 +122,8 @@ describe("Testing FuelForm Routes", () => {
     chai
       .request(app)
       .post("/fuelform/add")
-      .send(noPrice)
       .set("Authorization", "Bearer " + token)
+      .send(noPrice)
       .end((err, res) => {
         res.body.should.have.property("error");
         done();
@@ -137,8 +135,8 @@ describe("Testing FuelForm Routes", () => {
     chai
       .request(app)
       .post("/fuelform/add")
-      .send(noAmountDue)
       .set("Authorization", "Bearer " + token)
+      .send(noAmountDue)
       .end((err, res) => {
         res.body.should.have.property("error");
         done();

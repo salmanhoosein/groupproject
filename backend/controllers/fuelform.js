@@ -49,7 +49,7 @@ exports.postFuelQuotes = (req, res, next) => {
   //check if any validation errors, send back to frontend
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.json({
+    return res.status(417).json({
       error: errors.array()[0].msg,
     });
   }
