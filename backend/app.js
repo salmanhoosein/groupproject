@@ -20,6 +20,7 @@ app.use(cors());
 app.get("/", (req, res, next) => {
   res.status(200).send("Welcome to 4353 Group Project");
 });
+
 app.use("/profile", profileRoutes);
 app.use("/auth", authRoutes);
 app.use("/fuelform", fuelformRoutes);

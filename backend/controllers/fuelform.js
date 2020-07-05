@@ -4,8 +4,6 @@ const FuelForm = require("../database/fuelform");
 // FuelForm.createFuelQuoteTable().then().catch()
 
 exports.getFuelQuotes = (req, res, next) => {
-  //find user quotes based on fullName
-
   res.status(200).json({
     success: "Quotes Found",
     quotes: [

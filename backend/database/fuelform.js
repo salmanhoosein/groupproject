@@ -22,7 +22,7 @@ module.exports = class FuelForm {
   static createFuelQuoteTable() {
     return db.execute();
   }
-  static findByName(fullName) {
+  static findByName() {
     return db.execute();
   }
   static fetchAll() {

@@ -1,6 +1,7 @@
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 const app = require("../app");
+
 chai.should();
 chai.use(chaiHttp);
 
@@ -9,17 +10,14 @@ let defaultUser = {
   email: "user123@gmail.com",
   password: "password123",
 };
-
 let fuelForm = {
   gallonsRequested: 99,
   deliveryAddress: "1234 Test Address",
   deliveryDate: "7/03/2020",
-  amountDue: 12312,
-  price: 100,
 };
 
 // test fuelform  routes
-describe("Testing FuelForm Routes", () => {
+describe("Testing Pricing Routes", () => {
   //get authGuard token for each request
   beforeEach((done) => {
     chai
@@ -33,45 +31,37 @@ describe("Testing FuelForm Routes", () => {
       });
   });
 
-  it("it should NOT GET the fuelforms without Auth Header Token", (done) => {
+  it("it should NOT GET the pricing without Auth Header Token", (done) => {
     chai
       .request(app)
-      .get("/fuelform/get")
+      .post("/pricing/get")
       .end((err, res) => {
         res.body.should.have.property("error");
         done();
       });
   });
 
-  it("it should NOT ADD a fuelform without Auth Header Token", (done) => {
+  it("it should GET the pricing with Auth Header Token", (done) => {
     chai
       .request(app)
-      .post("/fuelform/add")
-      .end((err, res) => {
-        res.body.should.have.property("error");
-        done();
-      });
-  });
-
-  it("it should get the fuelforms for the user", (done) => {
-    chai
-      .request(app)
-      .get("/fuelform/get")
+      .post("/pricing/get")
       .set("Authorization", "Bearer " + token)
       .end((err, res) => {
         res.should.have.status(200);
+        res.body.should.have.property("success");
         done();
       });
   });
 
-  it("it should add a valid fuelform", (done) => {
+  it("it should GET the pricing with valid data", (done) => {
     chai
       .request(app)
-      .post("/fuelform/add")
+      .post("/pricing/get")
+      .set("Authorization", "Bearer " + token)
       .send(fuelForm)
-      .set("Authorization", "Bearer " + token)
       .end((err, res) => {
         res.should.have.status(200);
+        res.body.should.have.property("success");
         done();
       });
   });
@@ -113,32 +103,6 @@ describe("Testing FuelForm Routes", () => {
       .send(noDelDate)
       .set("Authorization", "Bearer " + token)
 
-      .end((err, res) => {
-        res.body.should.have.property("error");
-        done();
-      });
-  });
-  it("it should NOT ADD a fuelform without valid price field", (done) => {
-    let noPrice = JSON.parse(JSON.stringify(fuelForm));
-    noPrice.price = null;
-    chai
-      .request(app)
-      .post("/fuelform/add")
-      .send(noPrice)
-      .set("Authorization", "Bearer " + token)
-      .end((err, res) => {
-        res.body.should.have.property("error");
-        done();
-      });
-  });
-  it("it should NOT ADD a fuelform without valid amountDue field", (done) => {
-    let noAmountDue = JSON.parse(JSON.stringify(fuelForm));
-    noAmountDue.amountDue = -2;
-    chai
-      .request(app)
-      .post("/fuelform/add")
-      .send(noAmountDue)
-      .set("Authorization", "Bearer " + token)
       .end((err, res) => {
         res.body.should.have.property("error");
         done();

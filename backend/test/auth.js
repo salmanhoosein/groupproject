@@ -1,8 +1,6 @@
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 const app = require("../app");
-
-const expect = chai.expect;
 chai.should();
 chai.use(chaiHttp);
 
@@ -20,8 +18,8 @@ describe("Testing Auth Routes", () => {
       .post("/auth/register")
       .send(newUser)
       .end(function (err, res) {
-        expect(res.statusCode).to.equal(200);
-        expect(res.body.success).to.equal("User Succesfully Saved");
+        res.should.have.status(200);
+        res.body.should.have.property("success");
         done();
       });
   });
@@ -55,8 +53,8 @@ describe("Testing Auth Routes", () => {
       .post("/auth/login")
       .send(newUser)
       .end(function (err, res) {
-        expect(res.statusCode).to.equal(200);
-        expect(res.body.success).to.equal("User Logged In");
+        res.should.have.status(200);
+        res.body.should.have.property("success");
         done();
       });
   });

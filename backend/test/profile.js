@@ -2,7 +2,6 @@ const chai = require("chai");
 const chaiHttp = require("chai-http");
 const app = require("../app");
 
-const expect = chai.expect;
 chai.should();
 chai.use(chaiHttp);
 
@@ -62,7 +61,7 @@ describe("Testing Profile Routes ", () => {
       .send(profile)
       .end((err, res) => {
         res.should.have.status(200);
-        expect(res.body.success).to.equal("Profile added SUCCESS");
+        res.body.should.have.property("success");
         done();
       });
   });
@@ -73,7 +72,7 @@ describe("Testing Profile Routes ", () => {
       .set("Authorization", "Bearer " + token)
       .end((err, res) => {
         res.should.have.status(200);
-        expect(res.body.success).to.equal("Profile found");
+        res.body.should.have.property("success");
         done();
       });
   });
@@ -87,7 +86,7 @@ describe("Testing Profile Routes ", () => {
       .send(noAddrTwo)
       .end((err, res) => {
         res.should.have.status(200);
-        expect(res.body.success).to.equal("Profile added SUCCESS");
+        res.body.should.have.property("success");
         done();
       });
   });
