@@ -17,7 +17,7 @@ module.exports = class User {
     return db.execute();
   }
   static fetchAllUsers() {
-    return db.execute("SELECT * FROM USER");
+    return db.execute();
   }
   
 };
