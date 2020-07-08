@@ -1,31 +1,16 @@
 const db = require("./connection");
 
 module.exports = class FuelForm {
-  constructor(
-    gallonsRequested,
-    deliveryAddress,
-    deliveryDate,
-    price,
-    amountDue
-  ) {
-    this.gallonsRequested = gallonsRequested;
-    this.deliveryAddress = deliveryAddress;
-    this.deliveryDate = deliveryDate;
-    this.price = price;
-    this.amountDue = amountDue;
-  }
-
-  save() {
+  static saveFuelform() {
     return db.execute();
   }
-
-  static createFuelQuoteTable() {
+  static createFuelFormsTable() {
     return db.execute();
   }
-  static findByName() {
+  static findFuelFormsByEmail() {
     return db.execute();
   }
-  static fetchAll() {
-    return db.execute("SELECT * FROM FuelQuotes");
+  static fetchAllFuelForms() {
+    return db.execute();
   }
 };
