@@ -3,8 +3,6 @@ const bcrypt = require("bcryptjs");
 const { validationResult } = require("express-validator/check");
 const jwt = require("jsonwebtoken");
 
-// User.createUserTable().then().catch();
-
 exports.postLogin = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
@@ -23,6 +21,7 @@ exports.postLogin = (req, res, next) => {
   res.status(200).json({
     token: token,
     email: email,
+    userId: Math.random(Math.floor()),
     success: "User Logged In",
   });
   /*@TODO: implement database assignment 4

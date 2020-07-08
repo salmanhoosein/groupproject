@@ -1,11 +1,11 @@
 const { validationResult } = require("express-validator/check");
 const Profile = require("../database/profile");
 
-// Profile.createProfileTable().then().catch()
 
 exports.getProfile = (req, res, next) => {
   //find user profile based on fullName
-  let fullName = req.body.fullName;
+  let email = req.body.email;
+  let userId = req.body.userId;
 
   res.status(200).json({
     success: "Profile found",
@@ -41,6 +41,9 @@ exports.postProfile = (req, res, next) => {
   let city = req.body.city;
   let state = req.body.state;
   let zip = req.body.zip;
+  
+  let email = req.body.email;
+  let userId = req.body.userId;
 
   //check if any validation errors, send back to frontend
   const errors = validationResult(req);

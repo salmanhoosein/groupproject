@@ -1,9 +1,11 @@
 const { validationResult } = require("express-validator/check");
 const FuelForm = require("../database/fuelform");
 
-// FuelForm.createFuelQuoteTable().then().catch()
-
 exports.getFuelQuotes = (req, res, next) => {
+  let email = req.body.email;
+  let userId = req.body.userId;
+
+  
   res.status(200).json({
     success: "Quotes Found",
     quotes: [
@@ -45,6 +47,8 @@ exports.postFuelQuotes = (req, res, next) => {
   let deliveryDate = req.body.deliveryDate;
   let price = req.body.price;
   let amountDue = req.body.amountDue;
+  let email = req.body.email;
+  let userId = req.body.userId;
 
   //check if any validation errors, send back to frontend
   const errors = validationResult(req);

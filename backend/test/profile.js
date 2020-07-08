@@ -19,7 +19,6 @@ let profile = {
   city: "Houston",
   state: "TX",
   zip: "12345",
-  email: defaultUser.email,
 };
 
 describe("Testing Profile Routes ", () => {
@@ -30,6 +29,8 @@ describe("Testing Profile Routes ", () => {
       .post("/auth/login")
       .send(defaultUser)
       .end((err, res) => {
+        profile.userId = res.body.userId;
+        profile.email = res.body.email;
         token = res.body.token;
         res.should.have.status(200);
         done();

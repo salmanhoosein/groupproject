@@ -56,6 +56,47 @@ function InfoForm(props) {
   const [state, setState] = React.useState();
   const [zip, setZip] = React.useState();
 
+  //get profile from database
+  React.useEffect(() => {
+    //get token from redux, if user refreshed then from localstorage
+    let token = reduxAuth.user.token
+      ? reduxAuth.user.token
+      : localStorage.getItem("authtoken");
+    let email = reduxAuth.user.email
+      ? reduxAuth.user.email
+      : localStorage.getItem("userEmail");
+    let userId = reduxAuth.user.userId
+      ? reduxAuth.user.userId
+      : localStorage.getItem("userId");
+    axios({
+      method: "POST",
+      url: "http://localhost:8080/profile/get",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+      data: {
+        email: email,
+        userId: userId,
+      },
+    })
+      .then((res) => {
+        console.log(res);
+        if (res.data.success) {
+          setFullName(fullName);
+          setAddressOne(addressOne);
+          setAddressTwo(addressTwo);
+          setCity(city);
+          setState(state);
+          setZip(zip);
+        }
+        if (res.data.error) {
+          toast.error(res.data.error);
+        }
+      })
+      .catch((err) => console.log(err));
+  }, [reduxAuth.user.token]);
+
   return (
     <Card
       style={{
@@ -110,6 +151,9 @@ function InfoForm(props) {
               <Grid container spacing={1}>
                 <Grid item xs>
                   <TextField
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
                     error={Boolean(touched.fullName && errors.fullName)}
                     helperText={touched.fullName && errors.fullName}
                     label="Full Name"
@@ -130,6 +174,9 @@ function InfoForm(props) {
               <Grid container spacing={1}>
                 <Grid item xs>
                   <TextField
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
                     error={Boolean(touched.addressOne && errors.addressOne)}
                     helperText={touched.addressOne && errors.addressOne}
                     label="Address One"
@@ -150,6 +197,9 @@ function InfoForm(props) {
               <Grid container spacing={1}>
                 <Grid item xs>
                   <TextField
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
                     error={Boolean(touched.addressTwo && errors.addressTwo)}
                     helperText={touched.addressTwo && errors.addressTwo}
                     label="Address Two"
@@ -170,6 +220,9 @@ function InfoForm(props) {
               <Grid container spacing={1}>
                 <Grid item xs>
                   <TextField
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
                     error={Boolean(touched.city && errors.city)}
                     helperText={touched.city && errors.city}
                     label="City"
@@ -188,6 +241,9 @@ function InfoForm(props) {
                 <Grid item xs>
                   <TextField
                     select
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
                     label="State"
                     variant="outlined"
                     className={classes.formControl2}
@@ -215,9 +271,12 @@ function InfoForm(props) {
               <Grid container spacing={1}>
                 <Grid item xs>
                   <TextField
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
                     error={Boolean(touched.zip && errors.zip)}
                     helperText={touched.zip && errors.zip}
-                    label="zip"
+                    label="Zip"
                     name="zip"
                     fullWidth
                     type="text"
@@ -245,6 +304,12 @@ function InfoForm(props) {
                       let token = reduxAuth.user.token
                         ? reduxAuth.user.token
                         : localStorage.getItem("authtoken");
+                      let email = reduxAuth.user.email
+                        ? reduxAuth.user.email
+                        : localStorage.getItem("userEmail");
+                      let userId = reduxAuth.user.userId
+                        ? reduxAuth.user.userId
+                        : localStorage.getItem("userId");
                       axios({
                         method: "POST",
                         url: "http://localhost:8080/profile/add",
@@ -259,7 +324,8 @@ function InfoForm(props) {
                           city: city,
                           state: state,
                           zip: zip,
-                          email: reduxAuth.email,
+                          email: email,
+                          userId: userId,
                         },
                       })
                         .then((res) => {

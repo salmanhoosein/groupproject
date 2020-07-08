@@ -103,6 +103,8 @@ function LoginForm({ onSubmitSuccess }) {
                     if (res.data.success) {
                       dispatch(storeUSER(res.data));
                       localStorage.setItem("authtoken", res.data.token);
+                      localStorage.setItem("userEmail", res.data.email);
+                      localStorage.setItem("userId", res.data.userId);
                       //push to home page
                       history.push("/app/home");
                     }

@@ -16,7 +16,6 @@ let fuelForm = {
   deliveryDate: "7/03/2020",
   amountDue: 12312,
   price: 1,
-  email: defaultUser.email,
 };
 
 // test fuelform  routes
@@ -40,6 +39,8 @@ describe("Testing FuelForm Routes", () => {
         .post("/fuelform/get")
         .send(defaultUser.email)
         .end((err, res) => {
+          fuelForm.userId = res.body.userId;
+          fuelForm.email = res.body.email;
           res.body.should.have.property("error");
           done();
         });

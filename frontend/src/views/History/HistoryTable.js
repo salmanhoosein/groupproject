@@ -41,6 +41,12 @@ export default function HistoryTable() {
     let token = reduxAuth.user.token
       ? reduxAuth.user.token
       : localStorage.getItem("authtoken");
+    let email = reduxAuth.user.email
+      ? reduxAuth.user.email
+      : localStorage.getItem("userEmail");
+    let userId = reduxAuth.user.userId
+      ? reduxAuth.user.userId
+      : localStorage.getItem("userId");
     axios({
       method: "POST",
       url: "http://localhost:8080/fuelform/get",
@@ -49,7 +55,8 @@ export default function HistoryTable() {
         Authorization: "Bearer " + token,
       },
       data: {
-        email: reduxAuth.email,
+        email: email,
+        userId: userId,
       },
     })
       .then((res) => {

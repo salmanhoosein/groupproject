@@ -56,6 +56,12 @@ function FQFORM(props) {
     let token = reduxAuth.user.token
       ? reduxAuth.user.token
       : localStorage.getItem("authtoken");
+    let email = reduxAuth.user.email
+      ? reduxAuth.user.email
+      : localStorage.getItem("userEmail");
+    let userId = reduxAuth.user.userId
+      ? reduxAuth.user.userId
+      : localStorage.getItem("userId");
     axios({
       method: "POST",
       url: "http://localhost:8080/profile/get",
@@ -64,7 +70,8 @@ function FQFORM(props) {
         Authorization: "Bearer " + token,
       },
       data: {
-        email: reduxAuth.email,
+        email: email,
+        userId: userId,
       },
     })
       .then((res) => {
@@ -112,6 +119,9 @@ function FQFORM(props) {
               <Grid container spacing={1}>
                 <Grid item xs>
                   <TextField
+                    InputLabelProps={{
+                      shrink: true,
+                    }}  
                     label="Gallons Requested"
                     error={Boolean(
                       touched.gallonsRequested && errors.gallonsRequested
@@ -136,6 +146,9 @@ function FQFORM(props) {
               <Grid container spacing={1}>
                 <Grid item xs>
                   <TextField
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
                     label="Delivery Date"
                     type="date"
                     fullWidth
@@ -156,6 +169,9 @@ function FQFORM(props) {
                 <Grid item xs>
                   <TextField
                     disabled={true}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
                     label="Suggested Price/Gallon"
                     fullWidth
                     variant="outlined"
@@ -163,7 +179,7 @@ function FQFORM(props) {
                       handleChange(event);
                       setPrice(event.target.value);
                     }}
-                    value={values.price}
+                    value={price}
                   />
                 </Grid>
               </Grid>
@@ -175,11 +191,14 @@ function FQFORM(props) {
                     fullWidth
                     disabled={true}
                     variant="outlined"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
                     onChange={(event) => {
                       handleChange(event);
                       setAmountDue(event.target.value);
                     }}
-                    value={values.totalAmountDue}
+                    value={amountDue}
                   />
                 </Grid>
               </Grid>
@@ -191,6 +210,9 @@ function FQFORM(props) {
                     fullWidth
                     disabled={true}
                     variant="outlined"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
                     onChange={(event) => {
                       setDeliveryAddress(event.target.value);
                     }}
@@ -199,11 +221,15 @@ function FQFORM(props) {
                 </Grid>
               </Grid>
               <Box p={1} />
-              <Grid container justify="center">
+              <Grid container justify="space-evenly">
                 <Grid item>
                   <Button
                     color="secondary"
-                    disabled={true}
+                    disabled={
+                      !gallonsRequested ||
+                      !deliveryAddress ||
+                      deliveryDate == null
+                    }
                     fullWidth
                     size="large"
                     type="submit"
@@ -213,6 +239,71 @@ function FQFORM(props) {
                       let token = reduxAuth.user.token
                         ? reduxAuth.user.token
                         : localStorage.getItem("authtoken");
+                      let email = reduxAuth.user.email
+                        ? reduxAuth.user.email
+                        : localStorage.getItem("userEmail");
+                      let userId = reduxAuth.user.userId
+                        ? reduxAuth.user.userId
+                        : localStorage.getItem("userId");
+                      axios({
+                        method: "POST",
+                        url: "http://localhost:8080/pricing/get",
+                        headers: {
+                          "Content-Type": "application/json",
+                          Authorization: "Bearer " + token,
+                        },
+                        data: {
+                          gallonsRequested: gallonsRequested,
+                          deliveryAddress: deliveryAddress,
+                          deliveryDate: deliveryDate,
+                          email: email,
+                          userId: userId,
+                        },
+                      })
+                        .then((res) => {
+                          if (res.data.success) {
+                            console.log(res.data);
+                            setPrice(res.data.price);
+                            setAmountDue(res.data.amountDue);
+                            setGallonsRequested(res.data.gallonsRequested);
+                            setDeliveryAddress(res.data.deliveryAddress);
+                            setDeliveryDate(res.data.deliveryDate);
+                          }
+                          if (res.data.error) {
+                            toast.error(res.data.error);
+                          }
+                        })
+                        .catch((err) => console.log(err));
+                    }}
+                  >
+                    Get Quote
+                  </Button>
+                </Grid>
+                <Grid item>
+                  <Button
+                    color="secondary"
+                    disabled={
+                      !gallonsRequested ||
+                      !deliveryAddress ||
+                      !deliveryDate ||
+                      !price ||
+                      !amountDue
+                    }
+                    fullWidth
+                    size="large"
+                    type="submit"
+                    variant="contained"
+                    onClick={() => {
+                      //get token from redux, if user refreshed then from localstorage
+                      let token = reduxAuth.user.token
+                        ? reduxAuth.user.token
+                        : localStorage.getItem("authtoken");
+                      let email = reduxAuth.user.email
+                        ? reduxAuth.user.email
+                        : localStorage.getItem("userEmail");
+                      let userId = reduxAuth.user.userId
+                        ? reduxAuth.user.userId
+                        : localStorage.getItem("userId");
                       axios({
                         method: "POST",
                         url: "http://localhost:8080/fuelform/add",
@@ -226,7 +317,8 @@ function FQFORM(props) {
                           deliveryDate: deliveryDate,
                           price: price,
                           amountDue: amountDue,
-                          email: reduxAuth.email,
+                          email: email,
+                          userId: userId,
                         },
                       })
                         .then((res) => {
