@@ -259,6 +259,7 @@ function InfoForm(props) {
                           city: city,
                           state: state,
                           zip: zip,
+                          email: reduxAuth.email,
                         },
                       })
                         .then((res) => {

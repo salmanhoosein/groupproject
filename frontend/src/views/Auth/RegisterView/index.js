@@ -42,6 +42,14 @@ function RegisterView() {
           <Box my={2}>
             <Divider />
           </Box>
+          <Link
+            component={RouterLink}
+            to="/login"
+            variant="body2"
+            color="textSecondary"
+          >
+            Back to Login
+          </Link>
         </CardContent>
       </Card>
     </Container>

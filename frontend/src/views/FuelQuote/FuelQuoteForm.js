@@ -57,11 +57,14 @@ function FQFORM(props) {
       ? reduxAuth.user.token
       : localStorage.getItem("authtoken");
     axios({
-      method: "GET",
+      method: "POST",
       url: "http://localhost:8080/profile/get",
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + token,
+      },
+      data: {
+        email: reduxAuth.email,
       },
     })
       .then((res) => {
@@ -223,6 +226,7 @@ function FQFORM(props) {
                           deliveryDate: deliveryDate,
                           price: price,
                           amountDue: amountDue,
+                          email: reduxAuth.email,
                         },
                       })
                         .then((res) => {

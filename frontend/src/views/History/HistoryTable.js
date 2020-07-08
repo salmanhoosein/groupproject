@@ -42,11 +42,14 @@ export default function HistoryTable() {
       ? reduxAuth.user.token
       : localStorage.getItem("authtoken");
     axios({
-      method: "GET",
+      method: "POST",
       url: "http://localhost:8080/fuelform/get",
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + token,
+      },
+      data: {
+        email: reduxAuth.email,
       },
     })
       .then((res) => {
