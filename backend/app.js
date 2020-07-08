@@ -38,17 +38,20 @@ app.use("/", (req, res, next) => {
 
 app.listen(8080, async () => {
   //create database if it doesnt exist
-  await db.execute("CREATE DATABASE IF NOT EXISTS 4353group");
-  //use db created
-  await db.query("USE 4353group");
-  //create tables if they dont exist
-  await User.createUserTable();
-
-
-  /*
-  await Profile.createProfileTable();
-  await FuelForm.createFuelFormsTable();
+  try {
+    await db.execute("CREATE DATABASE IF NOT EXISTS 4353group");
+    //use db created
+    await db.query("USE 4353group");
+    //create tables if they dont exist
+    await User.createUserTable();
+    /*
+    await Profile.createProfileTable();
+    await FuelForm.createFuelFormsTable();
   */
+  } catch (err) {
+    console.log(err);
+  }
+
   console.log("server started on 8080");
 });
 
