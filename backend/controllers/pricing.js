@@ -15,11 +15,11 @@ exports.getPricing = (req, res, next) => {
       error: errors.array()[0].msg,
     });
   }
-  console.log(deliveryAddress);
+
   res.status(200).json({
     success: "CALCULATED PRICE",
-    price: gallonsRequested * 0.12,
-    amountDue: gallonsRequested * 2.51,
+    price: Math.floor(Math.random() * 16) + 5,
+    amountDue: Math.floor(Math.random() * 16) + 5,
     gallonsRequested: gallonsRequested,
     deliveryAddress: deliveryAddress,
     deliveryDate: deliveryDate,

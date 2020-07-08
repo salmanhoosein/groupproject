@@ -1,7 +1,6 @@
 const { validationResult } = require("express-validator/check");
 const Profile = require("../database/profile");
 
-
 exports.getProfile = (req, res, next) => {
   //find user profile based on fullName
   let email = req.body.email;
@@ -9,14 +8,12 @@ exports.getProfile = (req, res, next) => {
 
   res.status(200).json({
     success: "Profile found",
-    profile: {
-      fullName: "jane doe",
-      addressOne: "1234 Test Address",
-      addressTwo: "1234 second address",
-      city: "Houston",
-      state: "TX",
-      zip: "77099",
-    },
+    fullName: "jane doe",
+    addressOne: "1234 Test Address",
+    addressTwo: "1234 second address",
+    city: "Houston",
+    state: "TX",
+    zip: "77099",
   });
 
   /* @TODO: NEED ASSIGNMENT 4 DATABASE
@@ -41,7 +38,7 @@ exports.postProfile = (req, res, next) => {
   let city = req.body.city;
   let state = req.body.state;
   let zip = req.body.zip;
-  
+
   let email = req.body.email;
   let userId = req.body.userId;
 

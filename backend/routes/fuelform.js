@@ -21,7 +21,6 @@ router.post(
         min: 1,
         max: 100,
       })
-
       .withMessage("Delivery address is required"),
     check("deliveryDate")
       .isLength({

@@ -2,7 +2,10 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect } from "react";
 import { Link as RouterLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { Link, makeStyles, Grid, Button } from "@material-ui/core";
+
+import { logOut } from "../../redux/actions/AuthAction/AuthActions";
 const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
@@ -17,6 +20,7 @@ const useStyles = makeStyles(() => ({
 
 function NavBar() {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   return (
     <Grid
@@ -121,15 +125,26 @@ function NavBar() {
             Profile
           </Button>
         </Link>
-        <Link variant="body2" color="textSecondary">
+        <Link
+          variant="body2"
+          to="/login"
+          component={RouterLink}
+          color="textSecondary"
+        >
           <Button
             style={{
               color: "white",
             }}
             className={classes.buttonStyle}
             size="large"
+            onClick={() => {
+              dispatch(logOut());
+              localStorage.removeItem("userEmail");
+              localStorage.removeItem("userId");
+              localStorage.removeItem("authtoken");
+            }}
           >
-            Log Out
+            Log-Out
           </Button>
         </Link>
       </Grid>

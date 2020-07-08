@@ -52,7 +52,7 @@ app.listen(8080, async () => {
     console.log(err);
   }
 
-  // console.log("server started on 8080");
+  console.log("server started on 8080");
 });
 
 module.exports = app;

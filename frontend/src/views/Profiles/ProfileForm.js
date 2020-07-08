@@ -83,12 +83,12 @@ function InfoForm(props) {
       .then((res) => {
         console.log(res);
         if (res.data.success) {
-          setFullName(fullName);
-          setAddressOne(addressOne);
-          setAddressTwo(addressTwo);
-          setCity(city);
-          setState(state);
-          setZip(zip);
+          setFullName(res.data.fullName);
+          setAddressOne(res.data.addressOne);
+          setAddressTwo(res.data.addressTwo);
+          setCity(res.data.city);
+          setState(res.data.state);
+          setZip(res.data.zip);
         }
         if (res.data.error) {
           toast.error(res.data.error);
@@ -162,11 +162,14 @@ function InfoForm(props) {
                     type="text"
                     onBlur={handleBlur}
                     variant="outlined"
+                    onMouseEnter={(event) => {
+                      handleChange(event);
+                    }}
                     onChange={(event) => {
                       handleChange(event);
                       setFullName(event.target.value);
                     }}
-                    value={values.fullName}
+                    value={values.fullName || fullName}
                   />
                 </Grid>
               </Grid>
@@ -185,11 +188,14 @@ function InfoForm(props) {
                     type="text"
                     variant="outlined"
                     onBlur={handleBlur}
+                    onMouseEnter={(event) => {
+                      handleChange(event);
+                    }}
                     onChange={(event) => {
                       handleChange(event);
                       setAddressOne(event.target.value);
                     }}
-                    value={values.addressOne}
+                    value={values.addressOne || addressOne}
                   />
                 </Grid>
               </Grid>
@@ -208,11 +214,14 @@ function InfoForm(props) {
                     type="text"
                     variant="outlined"
                     onBlur={handleBlur}
+                    onMouseEnter={(event) => {
+                      handleChange(event);
+                    }}
                     onChange={(event) => {
                       handleChange(event);
                       setAddressTwo(event.target.value);
                     }}
-                    value={values.addressTwo}
+                    value={values.addressTwo || addressTwo}
                   />
                 </Grid>
               </Grid>
@@ -231,11 +240,14 @@ function InfoForm(props) {
                     type="text"
                     variant="outlined"
                     onBlur={handleBlur}
+                    onMouseEnter={(event) => {
+                      handleChange(event);
+                    }}
                     onChange={(event) => {
                       handleChange(event);
                       setCity(event.target.value);
                     }}
-                    value={values.city}
+                    value={values.city || city}
                   />
                 </Grid>
                 <Grid item xs>
@@ -249,8 +261,11 @@ function InfoForm(props) {
                     className={classes.formControl2}
                     error={Boolean(touched.state && errors.state)}
                     helperText={touched.state && errors.state}
-                    value={values.state}
+                    value={values.state || state}
                     onBlur={handleBlur}
+                    onMouseEnter={(event) => {
+                      handleChange(event);
+                    }}
                     onChange={(event) => {
                       handleChange(event);
                       setState(event.target.value);
@@ -282,11 +297,14 @@ function InfoForm(props) {
                     type="text"
                     variant="outlined"
                     onBlur={handleBlur}
+                    onMouseEnter={(event) => {
+                      handleChange(event);
+                    }}
                     onChange={(event) => {
                       handleChange(event);
                       setZip(event.target.value);
                     }}
-                    value={values.zip}
+                    value={values.zip || zip}
                   />
                 </Grid>
               </Grid>

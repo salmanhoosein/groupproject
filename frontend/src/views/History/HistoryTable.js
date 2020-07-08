@@ -20,6 +20,13 @@ const useStyles = makeStyles({
     marginTop: "10vh",
     width: "95%",
   },
+  HeadTableRow: {
+    backgroundColor: "black",
+  },
+  HeadTableCell: {
+    color: "white",
+    fontSize: 18,
+  },
 });
 
 toast.configure({
@@ -75,12 +82,16 @@ export default function HistoryTable() {
   return (
     <Table className={classes.table} aria-label="simple table">
       <TableHead>
-        <TableRow>
-          <TableCell>Gallons Requested</TableCell>
-          <TableCell>Delivery Date</TableCell>
-          <TableCell>Price</TableCell>
-          <TableCell>Amount Due</TableCell>
-          <TableCell>Delivery Address</TableCell>
+        <TableRow className={classes.HeadTableRow}>
+          <TableCell className={classes.HeadTableCell}>
+            Gallons Requested
+          </TableCell>
+          <TableCell className={classes.HeadTableCell}>Delivery Date</TableCell>
+          <TableCell className={classes.HeadTableCell}>Price</TableCell>
+          <TableCell className={classes.HeadTableCell}>Amount Due</TableCell>
+          <TableCell className={classes.HeadTableCell}>
+            Delivery Address
+          </TableCell>
         </TableRow>
       </TableHead>
       <TableBody>

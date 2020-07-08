@@ -77,8 +77,7 @@ function FQFORM(props) {
       .then((res) => {
         console.log(res);
         if (res.data.success) {
-          setDeliveryAddress(res.data.profile.addressOne);
-          toast.success("Profile Retrieved from DB!");
+          setDeliveryAddress(res.data.addressOne);
         }
         if (res.data.error) {
           toast.error(res.data.error);
@@ -121,7 +120,7 @@ function FQFORM(props) {
                   <TextField
                     InputLabelProps={{
                       shrink: true,
-                    }}  
+                    }}
                     label="Gallons Requested"
                     error={Boolean(
                       touched.gallonsRequested && errors.gallonsRequested
@@ -262,7 +261,7 @@ function FQFORM(props) {
                       })
                         .then((res) => {
                           if (res.data.success) {
-                            console.log(res.data);
+                            console.log(res.data.price);
                             setPrice(res.data.price);
                             setAmountDue(res.data.amountDue);
                             setGallonsRequested(res.data.gallonsRequested);

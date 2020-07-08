@@ -5,10 +5,23 @@ exports.getFuelQuotes = (req, res, next) => {
   let email = req.body.email;
   let userId = req.body.userId;
 
-  
   res.status(200).json({
     success: "Quotes Found",
     quotes: [
+      {
+        gallonsRequested: 99,
+        deliveryAddress: "1234 Test Address",
+        deliveryDate: "7/03/2020",
+        price: "$1000.00",
+        amountDue: "$99,000.00",
+      },
+      {
+        gallonsRequested: 99,
+        deliveryAddress: "1234 Test Address",
+        deliveryDate: "7/03/2020",
+        price: "$1000.00",
+        amountDue: "$99,000.00",
+      },
       {
         gallonsRequested: 99,
         deliveryAddress: "1234 Test Address",
