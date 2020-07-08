@@ -30,8 +30,9 @@ describe("Testing Protection Auth Guard", () => {
   it("it should pass with valid Auth Header Token", (done) => {
     chai
       .request(app)
-      .get("/fuelform/get")
+      .post("/fuelform/get")
       .set("Authorization", "Bearer " + token)
+      .send(defaultUser.email)
       .end((err, res) => {
         res.should.have.status(200);
         done();
@@ -41,7 +42,8 @@ describe("Testing Protection Auth Guard", () => {
   it("it should Send Error without Auth Header Token", (done) => {
     chai
       .request(app)
-      .get("/fuelform/get")
+      .post("/fuelform/get")
+      .send(defaultUser.email)
       .end((err, res) => {
         res.body.should.have.property("error");
         done();
@@ -51,8 +53,9 @@ describe("Testing Protection Auth Guard", () => {
   it("it should Send Error without valid Auth Header Token", (done) => {
     chai
       .request(app)
-      .get("/fuelform/get")
+      .post("/fuelform/get")
       .set("Authorization", "Bearer " + "invalid")
+      .send(defaultUser.email)
       .end((err, res) => {
         res.body.should.have.property("error");
         done();

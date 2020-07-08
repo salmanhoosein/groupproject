@@ -48,6 +48,6 @@ router.post(
 );
 
 //get details about fuelQuotes from database
-router.get("/get", authGuard, fuelformController.getFuelQuotes);
+router.post("/get", authGuard, fuelformController.getFuelQuotes);
 
 module.exports = router;

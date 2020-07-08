@@ -48,6 +48,6 @@ router.post(
 );
 
 //get details about profile from database
-authGuard, router.get("/get", authGuard, profileController.getProfile);
+router.post("/get", authGuard, profileController.getProfile);
 
 module.exports = router;
