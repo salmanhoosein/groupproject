@@ -3,11 +3,10 @@ const Profile = require("../database/profile");
 const db = require("../database/connection");
 
 exports.getProfile = (req, res, next) => {
-  //find user profile based on fullName
+  //find user profile based on email
   let email = req.body.email;
   let userId = req.body.userId;
-
-
+  console.log("Im here");
   Profile.findProfileByEmail(email)
     .then((profile) => {
       if (!profile) {
@@ -30,10 +29,10 @@ exports.postProfile = (req, res, next) => {
   let city = req.body.city;
   let state = req.body.state;
   let zip = req.body.zip;
-
-  let email = req.body.email;
   let userId = req.body.userId;
-
+  let email = req.body.email;
+  
+  console.log(userId,fullName,email,addressOne,addressTwo,city,state,zip);
   //check if any validation errors, send back to frontend
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -53,7 +52,7 @@ db.query(INSERT_PROFILE_QUERY, (err,results) => {
 });
  */
 Profile
-    .saveProfile(fullName, addressOne, addressTwo, city, state, zip)
+    .saveProfile(userId,email,fullName, addressOne, addressTwo, city, state, zip)
     .then((result) => {
       console.log('SUCCESSFULLY ADDED PROFILE');
       res.status(200).json({ result: "Profile added SUCCESS" });

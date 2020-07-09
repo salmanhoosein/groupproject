@@ -27,18 +27,6 @@ app.get("/", (req, res, next) => {
 });
 
 
-app.get("/getprofile", (req, res, next) => {
-  db.query("SELECT * FROM profile", (err,results)=>{
-		if(err){
-			return res.send(err)
-		}
-		else{
-			return res.json({
-				data:results
-			})
-		}
-	});
-});
 
 
 
