@@ -3,21 +3,14 @@ const FuelForm = require("../database/fuelform");
 
 exports.getFuelQuotes = (req, res, next) => {
   let email = req.body.email;
-  let userId = req.body.userId;
-
-  
   FuelForm.findFuelFormsByEmail(email)
     .then((quotes) => {
-      if (!quotes) {
-        res.json({ error: "Fuel Quotes not Found" });
-      } else {
-        res.status(200).json({ success: "Fuel Quotes found", quotes: quotes });
-      }
+      console.log(JSON.parse(JSON.stringify(quotes[0])));
+      res.status(200).json({ success: "Fuel Quotes found", quotes: quotes });
     })
     .catch((err) => {
-      res.json({ error: "Fuel Quote not Found" });
+      res.json({ error: "Fuel Quotes not Found" });
     });
-  
 };
 
 exports.postFuelQuotes = (req, res, next) => {
@@ -27,7 +20,6 @@ exports.postFuelQuotes = (req, res, next) => {
   let price = req.body.price;
   let amountDue = req.body.amountDue;
   let email = req.body.email;
-  let userId = req.body.userId;
 
   //check if any validation errors, send back to frontend
   const errors = validationResult(req);
@@ -37,15 +29,22 @@ exports.postFuelQuotes = (req, res, next) => {
     });
   }
 
-  
-  
-  FuelForm.saveFuelform(email,userid,gallonsRequested,gallonsRequested,deliveryDate,price,amountDue)
+  FuelForm.saveFuelform(
+    email,
+    gallonsRequested,
+    gallonsRequested,
+    deliveryAddress,
+    deliveryDate,
+    price,
+    amountDue
+  )
     .then((result) => {
-      res.status(200).json({result:result,success:'Fuel quote added successfully!'})
+      res
+        .status(201)
+        .json({ result: result, success: "Fuel quote added successfully!" });
     })
     .catch((err) => {
       console.log(err);
       res.json({ error: "Fuel quote not saved to database" });
     });
-  
 };

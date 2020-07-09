@@ -1,25 +1,21 @@
 const { validationResult } = require("express-validator/check");
 const Profile = require("../database/profile");
-const db = require("../database/connection");
 
 exports.getProfile = (req, res, next) => {
   //find user profile based on email
   let email = req.body.email;
-  let userId = req.body.userId;
-  console.log("Im here");
   Profile.findProfileByEmail(email)
     .then((profile) => {
-      if (!profile) {
-        res.json({ error: "Profile not Found" });
-      } else {
-        res.status(200).json({ success: "Profile found", profile: profile });
-      }
+      console.log(JSON.parse(JSON.stringify(user[0]))[0]);
+      res.status(200).json({
+        success: "Profile found",
+        profile: JSON.parse(JSON.stringify(profile[0]))[0],
+      });
     })
     .catch((err) => {
       console.log(err);
       res.json({ error: "Profile not Found" });
     });
-  
 };
 
 exports.postProfile = (req, res, next) => {
@@ -29,10 +25,8 @@ exports.postProfile = (req, res, next) => {
   let city = req.body.city;
   let state = req.body.state;
   let zip = req.body.zip;
-  let userId = req.body.userId;
   let email = req.body.email;
-  
-  console.log(userId,fullName,email,addressOne,addressTwo,city,state,zip);
+
   //check if any validation errors, send back to frontend
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -40,28 +34,31 @@ exports.postProfile = (req, res, next) => {
       error: errors.array()[0].msg,
     });
   }
-/*
- const INSERT_PROFILE_QUERY = `INSERT INTO profile (fullName,addressOne,addressTwo,city,state,zip) VALUES ('${fullName}','${addressOne}','${addressTwo}','${city}','${state}','${zip}')`
-db.query(INSERT_PROFILE_QUERY, (err,results) => {
-  if(err) {
-    return res.send(err)
-  }
-  else{ 
-    return res.send('added profile')
-  }
-});
- */
-Profile
-    .saveProfile(userId,email,fullName, addressOne, addressTwo, city, state, zip)
+
+  /** Find if profile Exists */
+  Profile.findProfileByEmail(email)
+    .then((profile) => {
+      /** If exists - Update Profile in DB */
+      if (profile[0].length > 0) {
+        //@TODO: create Update command
+      } else {
+        /** Doesnt Exist - Create Profile in DB */
+        return Profile.saveProfile(
+          email,
+          fullName,
+          addressOne,
+          addressTwo,
+          city,
+          state,
+          zip
+        );
+      }
+    })
     .then((result) => {
-      console.log('SUCCESSFULLY ADDED PROFILE');
-      res.status(200).json({ result: "Profile added SUCCESS" });
+      res.status(201).json({ result: "Profile added/updated SUCCESS" });
     })
     .catch((err) => {
-      console.log(err)
+      console.log(err);
       res.json({ error: "Error adding profile" });
-  
-
-
-});
+    });
 };
