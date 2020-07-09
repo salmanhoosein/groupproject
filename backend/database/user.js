@@ -14,10 +14,13 @@ module.exports = class User {
     );
   }
   static findUserByEmail() {
-    return db.execute();
+    return db.execute(
+    );
   }
   static fetchAllUsers() {
-    return db.execute();
+    return db.execute(
+    
+      );
   }
   
 };

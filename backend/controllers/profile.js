@@ -1,23 +1,14 @@
 const { validationResult } = require("express-validator/check");
 const Profile = require("../database/profile");
+const db = require("../database/connection");
 
 exports.getProfile = (req, res, next) => {
   //find user profile based on fullName
   let email = req.body.email;
   let userId = req.body.userId;
 
-  res.status(200).json({
-    success: "Profile found",
-    fullName: "jane doe",
-    addressOne: "1234 Test Address",
-    addressTwo: "1234 second address",
-    city: "Houston",
-    state: "TX",
-    zip: "77099",
-  });
 
-  /* @TODO: NEED ASSIGNMENT 4 DATABASE
-  Profile.findByName(fullName)
+  Profile.findProfileByEmail(email)
     .then((profile) => {
       if (!profile) {
         res.json({ error: "Profile not Found" });
@@ -28,7 +19,7 @@ exports.getProfile = (req, res, next) => {
     .catch((err) => {
       res.json({ error: "Profile not Found" });
     });
-  */
+  
 };
 
 exports.postProfile = (req, res, next) => {
@@ -50,18 +41,14 @@ exports.postProfile = (req, res, next) => {
     });
   }
 
-  //send dummy data since no db
-  res.status(201).json({ success: "Profile added SUCCESS" });
-
-  /*@TODO: Need Assignment 4 Database
-  let profile = new Profile(fullName, addressOne, addressTwo, city, state, zip);
-  profile
-    .save()
-    .then((result) => {
-      res.status(200).json({ result: "Profile added SUCCESS" });
-    })
-    .catch((err) => {
-      res.json({ error: "Error adding profile" });
-    });
-  */
+ const INSERT_PROFILE_QUERY = `INSERT INTO profile (fullName,addressOne,addressTwo,city,state,zip) VALUES ('${fullName}','${addressOne}','${addressTwo}','${city}','${state}','${zip}')`
+db.query(INSERT_PROFILE_QUERY, (err,results) => {
+  if(err) {
+    return res.send(err)
+  }
+  else{ 
+    return res.send('added profile')
+  }
+});
+ 
 };

@@ -26,6 +26,22 @@ app.get("/", (req, res, next) => {
   res.status(200).send("Welcome to 4353 Group Project");
 });
 
+
+app.get("/getprofile", (req, res, next) => {
+  db.query("SELECT * FROM profile", (err,results)=>{
+		if(err){
+			return res.send(err)
+		}
+		else{
+			return res.json({
+				data:results
+			})
+		}
+	});
+});
+
+
+
 app.use("/profile", profileRoutes);
 app.use("/auth", authRoutes);
 app.use("/fuelform", fuelformRoutes);
@@ -44,8 +60,10 @@ app.listen(8080, async () => {
     await db.query("USE 4353group");
     //create tables if they dont exist
     await User.createUserTable();
-    /*
+  
     await Profile.createProfileTable();
+    /*
+   
     await FuelForm.createFuelFormsTable();
   */
   } catch (err) {

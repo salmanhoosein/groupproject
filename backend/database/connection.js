@@ -1,7 +1,7 @@
 const mysql = require("mysql2");
 
 // UPDATE with your mysql password
-let salmanPassword = "Sal1998!";
+let salmanPassword = "Meepbo9970779!";
 // let zainPassword = null;
 // let edwinPassword = null;
 // let nathanPassword = null;
