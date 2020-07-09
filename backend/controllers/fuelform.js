@@ -5,42 +5,8 @@ exports.getFuelQuotes = (req, res, next) => {
   let email = req.body.email;
   let userId = req.body.userId;
 
-  res.status(200).json({
-    success: "Quotes Found",
-    quotes: [
-      {
-        gallonsRequested: 99,
-        deliveryAddress: "1234 Test Address",
-        deliveryDate: "7/03/2020",
-        price: "$1000.00",
-        amountDue: "$99,000.00",
-      },
-      {
-        gallonsRequested: 99,
-        deliveryAddress: "1234 Test Address",
-        deliveryDate: "7/03/2020",
-        price: "$1000.00",
-        amountDue: "$99,000.00",
-      },
-      {
-        gallonsRequested: 99,
-        deliveryAddress: "1234 Test Address",
-        deliveryDate: "7/03/2020",
-        price: "$1000.00",
-        amountDue: "$99,000.00",
-      },
-      {
-        gallonsRequested: 99,
-        deliveryAddress: "1234 Test Address",
-        deliveryDate: "7/03/2020",
-        price: "$1000.00",
-        amountDue: "$99,000.00",
-      },
-    ],
-  });
-
-  /* @TODO: NEED ASSIGNMENT 4 DATABASE
-  FuelForm.fetchAll()
+  
+  FuelForm.findFuelFormsByEmail(email)
     .then((quotes) => {
       if (!quotes) {
         res.json({ error: "Fuel Quotes not Found" });
@@ -51,7 +17,7 @@ exports.getFuelQuotes = (req, res, next) => {
     .catch((err) => {
       res.json({ error: "Fuel Quote not Found" });
     });
-  */
+  
 };
 
 exports.postFuelQuotes = (req, res, next) => {
@@ -71,18 +37,15 @@ exports.postFuelQuotes = (req, res, next) => {
     });
   }
 
-  //send dummy data since no db
-  res.status(201).json({ success: "Fuel Quote added SUCCESS" });
-
-  /*@TODO: Need Assignment 4 Database
-  let form = new FuelForm(fullName, addressOne, addressTwo, city, zip);
-  form
-    .save()
+  
+  
+  FuelForm.saveFuelform(email,userid,gallonsRequested,gallonsRequested,deliveryDate,price,amountDue)
     .then((result) => {
-      res.status(200).json({ result: "Form added SUCCESS" });
+      res.status(200).json({result:result,success:'Fuel quote added successfully!'})
     })
     .catch((err) => {
-      res.json({ error: "Error adding Form" });
+      console.log(err);
+      res.json({ error: "Fuel quote not saved to database" });
     });
-  */
+  
 };

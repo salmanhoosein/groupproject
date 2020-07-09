@@ -62,10 +62,10 @@ app.listen(8080, async () => {
     await User.createUserTable();
   
     await Profile.createProfileTable();
-    /*
+    
    
     await FuelForm.createFuelFormsTable();
-  */
+  
   } catch (err) {
     console.log(err);
   }
