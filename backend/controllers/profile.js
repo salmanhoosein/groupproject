@@ -17,6 +17,7 @@ exports.getProfile = (req, res, next) => {
       }
     })
     .catch((err) => {
+      console.log(err);
       res.json({ error: "Profile not Found" });
     });
   
@@ -40,7 +41,7 @@ exports.postProfile = (req, res, next) => {
       error: errors.array()[0].msg,
     });
   }
-
+/*
  const INSERT_PROFILE_QUERY = `INSERT INTO profile (fullName,addressOne,addressTwo,city,state,zip) VALUES ('${fullName}','${addressOne}','${addressTwo}','${city}','${state}','${zip}')`
 db.query(INSERT_PROFILE_QUERY, (err,results) => {
   if(err) {
@@ -50,5 +51,18 @@ db.query(INSERT_PROFILE_QUERY, (err,results) => {
     return res.send('added profile')
   }
 });
- 
+ */
+Profile
+    .saveProfile(fullName, addressOne, addressTwo, city, state, zip)
+    .then((result) => {
+      console.log('SUCCESSFULLY ADDED PROFILE');
+      res.status(200).json({ result: "Profile added SUCCESS" });
+    })
+    .catch((err) => {
+      console.log(err)
+      res.json({ error: "Error adding profile" });
+  
+
+
+});
 };

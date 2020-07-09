@@ -3,13 +3,19 @@ const db = require("./connection");
 module.exports = class Profile {
   static saveProfile(fullName, addressOne, addressTwo, city, state, zip) {
     return db.execute(
-        'INSERT INTO profile fullName,addressOne,addressTwo,city,state,zip'
-      );
+        'INSERT INTO profile (fullName,addressOne,addressTwo,city,state,zip) VALUES (?,?,?,?,?,?)',[
+            fullName,
+            addressOne,
+            addressTwo,
+            city,
+            state,
+            zip,
+        ]);
   }
   static createProfileTable() {
     return db.execute(
       "CREATE TABLE IF NOT \
-        EXISTS profile (fullname varchar(255) not null primary key unique,\
+        EXISTS profile (fullname varchar(255) not null ,\
              addressone varchar(255) not null,\
                addresstwo varchar(255) not null,\
                  city varchar(255) not null,\
@@ -21,9 +27,9 @@ module.exports = class Profile {
     );
   }
   static findProfileByEmail() {
-    return db.execute();
+     return db.execute("SELECT * FROM profile WHERE email = ?", [email]);
   }
   static fetchAllProfiles() {
-    return db.execute();
+    return db.execute("SELECT * FROM profile");
   }
 };
