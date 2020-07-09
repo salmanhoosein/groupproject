@@ -77,7 +77,7 @@ export default function HistoryTable() {
         }
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [reduxAuth.user.userId, reduxAuth.user.email, reduxAuth.user.token]);
 
   return (
     <Table className={classes.table} aria-label="simple table">

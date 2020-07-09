@@ -83,19 +83,19 @@ function InfoForm(props) {
       .then((res) => {
         console.log(res);
         if (res.data.success) {
-          setFullName(res.data.fullName);
-          setAddressOne(res.data.addressOne);
-          setAddressTwo(res.data.addressTwo);
-          setCity(res.data.city);
-          setState(res.data.state);
-          setZip(res.data.zip);
+          setFullName(res.data.profile.fullName);
+          setAddressOne(res.data.profile.addressOne);
+          setAddressTwo(res.data.profile.addressTwo);
+          setCity(res.data.profile.city);
+          setState(res.data.profile.state);
+          setZip(res.data.profile.zip);
         }
         if (res.data.error) {
           toast.error(res.data.error);
         }
       })
       .catch((err) => console.log(err));
-  }, [reduxAuth.user.token]);
+  }, [reduxAuth.user.userId, reduxAuth.user.email, reduxAuth.user.token]);
 
   return (
     <Card

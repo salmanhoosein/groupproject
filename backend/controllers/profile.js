@@ -6,7 +6,7 @@ exports.getProfile = (req, res, next) => {
   let email = req.body.email;
   Profile.findProfileByEmail(email)
     .then((profile) => {
-      console.log(JSON.parse(JSON.stringify(user[0]))[0]);
+      console.log(JSON.parse(JSON.stringify(profile[0]))[0]);
       res.status(200).json({
         success: "Profile found",
         profile: JSON.parse(JSON.stringify(profile[0]))[0],
@@ -26,6 +26,7 @@ exports.postProfile = (req, res, next) => {
   let state = req.body.state;
   let zip = req.body.zip;
   let email = req.body.email;
+  let userId = req.body.userId;
 
   //check if any validation errors, send back to frontend
   const errors = validationResult(req);
@@ -40,10 +41,21 @@ exports.postProfile = (req, res, next) => {
     .then((profile) => {
       /** If exists - Update Profile in DB */
       if (profile[0].length > 0) {
-        //@TODO: create Update command
+        /** Doesnt Exist - Create Profile in DB */
+        return Profile.updateProfileByEmail(
+          userId,
+          email,
+          fullName,
+          addressOne,
+          addressTwo,
+          city,
+          state,
+          zip
+        );
       } else {
         /** Doesnt Exist - Create Profile in DB */
         return Profile.saveProfile(
+          userId,
           email,
           fullName,
           addressOne,
@@ -55,7 +67,9 @@ exports.postProfile = (req, res, next) => {
       }
     })
     .then((result) => {
-      res.status(201).json({ result: "Profile added/updated SUCCESS" });
+      res
+        .status(201)
+        .json({ success: "Profile added/updated SUCCESS", result: result });
     })
     .catch((err) => {
       console.log(err);

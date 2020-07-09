@@ -6,7 +6,10 @@ exports.getFuelQuotes = (req, res, next) => {
   FuelForm.findFuelFormsByEmail(email)
     .then((quotes) => {
       console.log(JSON.parse(JSON.stringify(quotes[0])));
-      res.status(200).json({ success: "Fuel Quotes found", quotes: quotes });
+      res.status(200).json({
+        success: "Fuel Quotes found",
+        quotes: JSON.parse(JSON.stringify(quotes[0])),
+      });
     })
     .catch((err) => {
       res.json({ error: "Fuel Quotes not Found" });
@@ -20,6 +23,7 @@ exports.postFuelQuotes = (req, res, next) => {
   let price = req.body.price;
   let amountDue = req.body.amountDue;
   let email = req.body.email;
+  let userId = req.body.userId;
 
   //check if any validation errors, send back to frontend
   const errors = validationResult(req);
@@ -30,8 +34,8 @@ exports.postFuelQuotes = (req, res, next) => {
   }
 
   FuelForm.saveFuelform(
+    userId,
     email,
-    gallonsRequested,
     gallonsRequested,
     deliveryAddress,
     deliveryDate,

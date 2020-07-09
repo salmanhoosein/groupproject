@@ -23,7 +23,7 @@ exports.postLogin = (req, res, next) => {
       //if we don't find a email, user doesn't exist
       const foundUserData = JSON.parse(JSON.stringify(user[0]))[0];
       if (!foundUserData) {
-        res.json({ error: "User Not Found" });
+        return res.json({ error: "User Not Found" });
       }
       loggedInUser = foundUserData;
       //if we do find email, check password from request with password in database for user

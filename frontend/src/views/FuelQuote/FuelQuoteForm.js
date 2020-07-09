@@ -75,16 +75,15 @@ function FQFORM(props) {
       },
     })
       .then((res) => {
-        console.log(res);
         if (res.data.success) {
-          setDeliveryAddress(res.data.addressOne);
+          setDeliveryAddress(res.data.profile.addressOne);
         }
         if (res.data.error) {
           toast.error(res.data.error);
         }
       })
       .catch((err) => console.log(err));
-  }, [reduxAuth.user.token]);
+  }, [reduxAuth.user.token, reduxAuth.user.userId, reduxAuth.user.email]);
 
   return (
     <Card
@@ -293,6 +292,7 @@ function FQFORM(props) {
                     type="submit"
                     variant="contained"
                     onClick={() => {
+                      console.log(typeof price);
                       //get token from redux, if user refreshed then from localstorage
                       let token = reduxAuth.user.token
                         ? reduxAuth.user.token
@@ -323,6 +323,10 @@ function FQFORM(props) {
                         .then((res) => {
                           if (res.data.success) {
                             toast.success("Form Saved!");
+                            setPrice("");
+                            setAmountDue("");
+                            setGallonsRequested("");
+                            setDeliveryDate("");
                           }
                           if (res.data.error) {
                             toast.error(res.data.error);

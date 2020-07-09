@@ -2,6 +2,7 @@ const db = require("./connection");
 
 module.exports = class FuelForm {
   static saveFuelform(
+    userId,
     email,
     gallonsRequested,
     deliveryAddress,
@@ -10,26 +11,36 @@ module.exports = class FuelForm {
     amountDue
   ) {
     return db.execute(
-      "INSERT INTO fuelform (email,gallonsRequested,\
-        deliveryAddress,deliveryDate,price,amountDue) values (?,?,?,?,?,?,?)",
-      [email, gallonsRequested, deliveryAddress, deliveryDate, price, amountDue]
+      "INSERT INTO fuelform (userId, email,gallonsRequested,\
+        deliveryAddress,deliveryDate,price,amountDue) VALUES (?,?,?,?,?,?,?)",
+      [
+        userId,
+        email,
+        gallonsRequested,
+        deliveryAddress,
+        deliveryDate,
+        price,
+        amountDue,
+      ]
     );
   }
 
   static createFuelFormsTable() {
     return db.execute(
       "CREATE TABLE IF NOT \
-        EXISTS fuelform ( userId int auto_increment primary key \
+        EXISTS fuelform ( userId INT, \
           email VARCHAR(255) NOT NULL,\
-            gallonsRequested int not null, deliveryAddress VARCHAR(255) not null,\
-               deliveryDate VARCHAR(10) NOT NULL, \
-                  price int not null, amountDue int not null)"
+            gallonsRequested INT NOT NULL,\
+             deliveryAddress VARCHAR(255) NOT NULL,\
+               deliveryDate VARCHAR(255) NOT NULL, \
+                  price INT NOT NULL, \
+                    amountDue INT NOT NULL)"
     );
   }
   static findFuelFormsByEmail(email) {
-    return db.execute("SELECT * fuelform where email = ?", [email]);
+    return db.execute("SELECT * FROM fuelform WHERE email = ?", [email]);
   }
   static fetchAllFuelForms() {
-    return db.execute("SELECT * from fuelform");
+    return db.execute("SELECT * FROM fuelform");
   }
 };
