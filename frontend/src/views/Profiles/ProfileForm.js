@@ -70,7 +70,7 @@ function InfoForm(props) {
       : localStorage.getItem("userId");
     axios({
       method: "POST",
-      url: "http://localhost:8080/profile/add",
+      url: "http://localhost:8080/profile/get",
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + token,
