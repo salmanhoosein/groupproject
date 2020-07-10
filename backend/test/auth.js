@@ -78,6 +78,8 @@ describe("Testing Auth Routes", () => {
         .end(function (err, res) {
           if (res.body.error) {
             console.log("email already exists! change in utils/testingData.js");
+            res.body.should.have.property("success");
+            res.should.have.status(201);
           } else {
             res.body.should.have.property("success");
             res.should.have.status(201);

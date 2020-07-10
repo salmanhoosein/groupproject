@@ -1,6 +1,6 @@
 module.exports = {
   userData: {
-    email: "testCase2@gmail.com",
+    email: "testCase3@gmail.com",
     password: "password123",
   },
   profileData: {
