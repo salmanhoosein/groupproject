@@ -5,7 +5,6 @@ exports.getFuelQuotes = (req, res, next) => {
   let email = req.body.email;
   FuelForm.findFuelFormsByEmail(email)
     .then((quotes) => {
-      console.log(JSON.parse(JSON.stringify(quotes[0])));
       res.status(200).json({
         success: "Fuel Quotes found",
         quotes: JSON.parse(JSON.stringify(quotes[0])),

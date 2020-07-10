@@ -18,7 +18,4 @@ module.exports = class User {
   static findUserByEmail(email) {
     return db.execute("SELECT * FROM users WHERE email = ?", [email]);
   }
-  static fetchAllUsers() {
-    return db.execute("SELECT * FROM users");
-  }
 };

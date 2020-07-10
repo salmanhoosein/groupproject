@@ -6,7 +6,6 @@ exports.getProfile = (req, res, next) => {
   let email = req.body.email;
   Profile.findProfileByEmail(email)
     .then((profile) => {
-      console.log(JSON.parse(JSON.stringify(profile[0]))[0]);
       res.status(200).json({
         success: "Profile found",
         profile: JSON.parse(JSON.stringify(profile[0]))[0],

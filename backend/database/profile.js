@@ -52,7 +52,4 @@ module.exports = class Profile {
       [fullName, addressOne, addressTwo, city, state, zip, email]
     );
   }
-  static fetchAllProfiles() {
-    return db.execute("SELECT * FROM profile");
-  }
 };
