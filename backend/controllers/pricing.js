@@ -16,6 +16,21 @@ exports.getPricing = (req, res, next) => {
     });
   }
 
+  //let userState = null;
+
+  /*
+  function setValue(value){
+    userState = value;
+    console.log(userState)
+  }*/
+
+  
+  Pricing.checkState(email,userId).then((value) => {
+    var userState = values[0].state;
+    console.log(userState);  
+  });
+
+
   res.status(200).json({
     success: "CALCULATED PRICE",
     price: Math.floor(Math.random() * 16) + 5,
