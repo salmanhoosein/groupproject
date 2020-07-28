@@ -16,27 +16,42 @@ exports.getPricing = (req, res, next) => {
     });
   }
 
-  //let userState = null;
+  let locationFactor=0;
+  let gallonsRequestedFactor =0;
+  let profitFactor = 0.1;
+  let pricePerGallon = 0;
+  let totalPrice =0;
+  // let historyFactor=0;
 
-  /*
-  function setValue(value){
-    userState = value;
-    console.log(userState)
-  }*/
-
-  
+  if (gallonsRequested>1000) {
+    gallonsRequestedFactor=0.02
+  }
+  else{
+    gallonsRequestedFactor=0.03
+  }
+ 
   Pricing.checkState(email,userId).then((value) => {
-    var userState = values[0].state;
-    console.log(userState);  
-  });
+      console.log(value[0][0].state);
+        if(value[0][0].state ==="TX")  {
+       
+          locationFactor = 0.02;
+        }
+        else {
+          locationFactor=0.01;
+        }
 
+        pricePerGallon=1.5*(locationFactor+gallonsRequestedFactor+profitFactor);
+        totalPrice = gallonsRequested*pricePerGallon;
+        let check = pricePerGallon.toFixed(3)
+        
 
-  res.status(200).json({
-    success: "CALCULATED PRICE",
-    price: Math.floor(Math.random() * 16) + 5,
-    amountDue: Math.floor(Math.random() * 16) + 5,
-    gallonsRequested: gallonsRequested,
-    deliveryAddress: deliveryAddress,
-    deliveryDate: deliveryDate,
-  });
+  }).then((result) =>    res.status(200).json({
+        success: "CALCULATED PRICE",
+        price: +pricePerGallon.toFixed(3),
+        amountDue: +totalPrice.toFixed(2),
+        gallonsRequested: gallonsRequested,
+        deliveryAddress: deliveryAddress,
+        deliveryDate: deliveryDate,
+        })); 
+  
 };
