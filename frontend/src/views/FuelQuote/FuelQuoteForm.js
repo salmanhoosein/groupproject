@@ -325,6 +325,7 @@ function FQFORM(props) {
                             toast.success("Form Saved!");
                             setPrice("");
                             setAmountDue("");
+                            values.gallonsRequested = "";
                             setGallonsRequested("");
                             setDeliveryDate("");
                           }

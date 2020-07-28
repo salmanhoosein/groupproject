@@ -11,7 +11,7 @@ module.exports = class FuelForm {
     amountDue
   ) {
     return db.execute(
-      "INSERT INTO fuelform (userId, email,gallonsRequested,\
+      "INSERT INTO fuelform (userId, email, gallonsRequested,\
         deliveryAddress,deliveryDate,price,amountDue) VALUES (?,?,?,?,?,?,?)",
       [
         userId,
@@ -39,8 +39,5 @@ module.exports = class FuelForm {
   }
   static findFuelFormsByEmail(email) {
     return db.execute("SELECT * FROM fuelform WHERE email = ?", [email]);
-  }
-  static fetchAllFuelForms() {
-    return db.execute("SELECT * FROM fuelform");
   }
 };

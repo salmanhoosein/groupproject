@@ -1,25 +1,26 @@
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 const app = require("../app");
+const db = require("../database/connection");
+const { userData, fuelFormData } = require("../utils/testingData");
 chai.should();
 chai.use(chaiHttp);
+const expect = chai.expect;
 
 // data to use for tests
-let defaultUser = {
-  email: "user123@gmail.com",
-  password: "password123",
-};
-
-let fuelForm = {
-  gallonsRequested: 99,
-  deliveryAddress: "1234 Test Address",
-  deliveryDate: "7/03/2020",
-  amountDue: 12312,
-  price: 1,
-};
+let token;
+let defaultUser = JSON.parse(JSON.stringify(userData));
+let fuelForm = JSON.parse(JSON.stringify(fuelFormData));
 
 // test fuelform  routes
 describe("Testing FuelForm Routes", () => {
+  //connect to database
+  before((done) => {
+    db.query("USE 4353testing")
+      .then((res) => done())
+      .catch((err) => console.log(err));
+  });
+
   //get authGuard token for each request
   beforeEach((done) => {
     chai
@@ -28,19 +29,20 @@ describe("Testing FuelForm Routes", () => {
       .send(defaultUser)
       .end((err, res) => {
         token = res.body.token;
+        fuelForm.userId = res.body.userId;
+        fuelForm.email = res.body.email;
         res.should.have.status(200);
         done();
       });
   });
+
   describe("FuelForm Auth Guard", () => {
     it("it should NOT GET the fuelforms without Auth Header Token", (done) => {
       chai
         .request(app)
         .post("/fuelform/get")
-        .send(defaultUser.email)
+        .send({ email: fuelForm.email })
         .end((err, res) => {
-          fuelForm.userId = res.body.userId;
-          fuelForm.email = res.body.email;
           res.body.should.have.property("error");
           done();
         });
@@ -127,26 +129,34 @@ describe("Testing FuelForm Routes", () => {
   });
 
   describe("FuelForm Database/Controllers", () => {
+    //add 3 fuelforms for the user
+    for (let index = 0; index < 3; index++) {
+      it("it should add a valid fuelform", (done) => {
+        chai
+          .request(app)
+          .post("/fuelform/add")
+          .set("Authorization", "Bearer " + token)
+          .send(fuelForm)
+          .end((err, res) => {
+            res.body.should.have.property("success");
+            expect(res.body.success).to.equal("Fuel quote added successfully!");
+            res.should.have.status(201);
+            done();
+          });
+      });
+    }
     it("it should get the fuelforms for the user", (done) => {
       chai
         .request(app)
         .post("/fuelform/get")
         .set("Authorization", "Bearer " + token)
-        .send(defaultUser.email)
+        .send({ email: fuelForm.email })
         .end((err, res) => {
+          res.body.should.have.property("success");
+          res.body.should.have.property("quotes");
+          expect(res.body.quotes).to.be.an("array");
+          expect(res.body.quotes[0]).to.include({ email: fuelForm.email });
           res.should.have.status(200);
-          done();
-        });
-    });
-
-    it("it should add a valid fuelform", (done) => {
-      chai
-        .request(app)
-        .post("/fuelform/add")
-        .set("Authorization", "Bearer " + token)
-        .send(fuelForm)
-        .end((err, res) => {
-          res.should.have.status(201);
           done();
         });
     });

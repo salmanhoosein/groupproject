@@ -6,7 +6,6 @@ const jwt = require("jsonwebtoken");
 exports.postLogin = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
-
   //check validation errors
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -77,7 +76,7 @@ exports.postRegister = (req, res, next) => {
     })
     .then((result) => {
       res
-        .status(200)
+        .status(201)
         .json({ result: result, success: "User Succesfully Saved" });
     })
     .catch((err) => {

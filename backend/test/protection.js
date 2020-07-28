@@ -1,19 +1,17 @@
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 const app = require("../app");
+const { userData } = require("../utils/testingData");
 
 chai.should();
 chai.use(chaiHttp);
 
 // data to use for tests
-let defaultUser = {
-  email: "user123@gmail.com",
-  password: "password123",
-};
 let token;
+let defaultUser = JSON.parse(JSON.stringify(userData));
 
 // test protection Auth Guard
-describe("Testing Protection Auth Guard", () => {
+describe("Testing Protection Guard", () => {
   //get authGuard token for each request
   beforeEach((done) => {
     chai
@@ -32,7 +30,7 @@ describe("Testing Protection Auth Guard", () => {
       .request(app)
       .post("/fuelform/get")
       .set("Authorization", "Bearer " + token)
-      .send(defaultUser.email)
+      .send({ email: defaultUser.email })
       .end((err, res) => {
         res.should.have.status(200);
         done();
@@ -43,7 +41,7 @@ describe("Testing Protection Auth Guard", () => {
     chai
       .request(app)
       .post("/fuelform/get")
-      .send(defaultUser.email)
+      .send({ email: defaultUser.email })
       .end((err, res) => {
         res.body.should.have.property("error");
         done();
@@ -55,7 +53,7 @@ describe("Testing Protection Auth Guard", () => {
       .request(app)
       .post("/fuelform/get")
       .set("Authorization", "Bearer " + "invalid")
-      .send(defaultUser.email)
+      .send({ email: defaultUser.email })
       .end((err, res) => {
         res.body.should.have.property("error");
         done();

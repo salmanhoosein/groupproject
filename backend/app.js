@@ -26,10 +26,6 @@ app.get("/", (req, res, next) => {
   res.status(200).send("Welcome to 4353 Group Project");
 });
 
-
-
-
-
 app.use("/profile", profileRoutes);
 app.use("/auth", authRoutes);
 app.use("/fuelform", fuelformRoutes);
@@ -41,24 +37,23 @@ app.use("/", (req, res, next) => {
 });
 
 app.listen(8080, async () => {
-  //create database if it doesnt exist
+  //create database if it doesnt exist based on environment
   try {
-    await db.execute("CREATE DATABASE IF NOT EXISTS 4353group");
+    process.env.NODE_ENV == "test"
+      ? await db.execute("CREATE DATABASE IF NOT EXISTS 4353testing")
+      : await db.execute("CREATE DATABASE IF NOT EXISTS 4353group");
     //use db created
-    await db.query("USE 4353group");
+    process.env.NODE_ENV == "test"
+      ? await db.query("USE 4353testing")
+      : await db.query("USE 4353group");
+      
     //create tables if they dont exist
     await User.createUserTable();
-  
     await Profile.createProfileTable();
-    
-   
     await FuelForm.createFuelFormsTable();
-  
   } catch (err) {
     console.log(err);
   }
-
-  console.log("server started on 8080");
 });
 
 module.exports = app;
