@@ -33,8 +33,8 @@ module.exports = class FuelForm {
             gallonsRequested INT NOT NULL,\
              deliveryAddress VARCHAR(255) NOT NULL,\
                deliveryDate VARCHAR(255) NOT NULL, \
-                  price INT NOT NULL, \
-                    amountDue INT NOT NULL)"
+                  price DECIMAL(65,3) NOT NULL, \
+                    amountDue DECIMAL(65,2) NOT NULL)"
     );
   }
   static findFuelFormsByEmail(email) {
