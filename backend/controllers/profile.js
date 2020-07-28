@@ -26,6 +26,7 @@ exports.postProfile = (req, res, next) => {
   let zip = req.body.zip;
   let email = req.body.email;
   let userId = req.body.userId;
+  
 
   //check if any validation errors, send back to frontend
   const errors = validationResult(req);

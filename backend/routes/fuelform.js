@@ -31,16 +31,12 @@ router.post(
     check("price")
       .isLength({
         min: 1,
-        max: 100,
       })
-      .isInt({ gt: 0 })
       .withMessage("Price is required"),
     check("amountDue")
       .isLength({
         min: 1,
-        max: 100,
       })
-      .isInt({ gt: 0 })
       .withMessage("Amount due is required"),
   ],
   fuelformController.postFuelQuotes

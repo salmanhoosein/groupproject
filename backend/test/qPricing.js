@@ -2,7 +2,7 @@ const chai = require("chai");
 const chaiHttp = require("chai-http");
 const app = require("../app");
 const db = require("../database/connection");
-const { userData, fuelFormData } = require("../utils/testingData");
+const { userData, pricingData } = require("../utils/testingData");
 
 chai.should();
 chai.use(chaiHttp);
@@ -10,7 +10,7 @@ chai.use(chaiHttp);
 // data to use for tests
 let token;
 let defaultUser = JSON.parse(JSON.stringify(userData));
-let fuelForm = JSON.parse(JSON.stringify(fuelFormData));
+let pricingForm = JSON.parse(JSON.stringify(pricingData));
 
 // test Pricing  routes
 describe("Testing Pricing Routes", () => {
@@ -18,6 +18,18 @@ describe("Testing Pricing Routes", () => {
   before((done) => {
     db.query("USE 4353testing")
       .then((res) => done())
+      .catch((err) => console.log(err));
+  });
+
+  //connect to database
+  before((done) => {
+    db.execute("SELECT userId FROM profile WHERE email = ?", [
+      pricingForm.email,
+    ])
+      .then((res) => {
+        pricingForm.userId = res[0][0].userId;
+        done();
+      })
       .catch((err) => console.log(err));
   });
 
@@ -52,7 +64,7 @@ describe("Testing Pricing Routes", () => {
         .request(app)
         .post("/pricing/get")
         .set("Authorization", "Bearer " + token)
-        .send(fuelForm)
+        .send(pricingForm)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.have.property("success");
@@ -61,8 +73,8 @@ describe("Testing Pricing Routes", () => {
     });
 
     it("it should NOT GET the pricing without valid gallonsRequested field", (done) => {
-      let noGal = JSON.parse(JSON.stringify(fuelForm));
-      noGal.gallonsRequested = -1;
+      let noGal = JSON.parse(JSON.stringify(pricingForm));
+      noGal.gallonsRequested = null;
       chai
         .request(app)
         .post("/pricing/get")
@@ -75,7 +87,7 @@ describe("Testing Pricing Routes", () => {
     });
 
     it("it should NOT GET the pricing without valid deliveryAddress field", (done) => {
-      let noDelAddr = JSON.parse(JSON.stringify(fuelForm));
+      let noDelAddr = JSON.parse(JSON.stringify(pricingForm));
       noDelAddr.deliveryAddress = null;
       chai
         .request(app)
@@ -88,7 +100,7 @@ describe("Testing Pricing Routes", () => {
         });
     });
     it("it should NOT GET the pricing without valid deliveryDate field", (done) => {
-      let noDelDate = JSON.parse(JSON.stringify(fuelForm));
+      let noDelDate = JSON.parse(JSON.stringify(pricingForm));
       noDelDate.deliveryDate = null;
       chai
         .request(app)

@@ -16,42 +16,47 @@ exports.getPricing = (req, res, next) => {
     });
   }
 
-  let locationFactor=0;
-  let gallonsRequestedFactor =0;
-  let profitFactor = 0.1;
-  let pricePerGallon = 0;
-  let totalPrice =0;
-  // let historyFactor=0;
+  let currentPrice = 1.5;
+  let locationFactor = 0.04;
+  let gallonsRequestedFactor = gallonsRequested > 1000 ? 0.02 : 0.03;
+  let companyProfitFactor = 0.1;
+  let margin = 0;
+  let suggestedPricePerGallon = 0;
+  let rateHistoryFactor = 0;
 
-  if (gallonsRequested>1000) {
-    gallonsRequestedFactor=0.02
-  }
-  else{
-    gallonsRequestedFactor=0.03
-  }
- 
-  Pricing.checkState(email,userId).then((value) => {
-      console.log(value[0][0].state);
-        if(value[0][0].state ==="TX")  {
-       
-          locationFactor = 0.02;
-        }
-        else {
-          locationFactor=0.01;
-        }
-
-        pricePerGallon=1.5*(locationFactor+gallonsRequestedFactor+profitFactor);
-        totalPrice = gallonsRequested*pricePerGallon;
-        let check = pricePerGallon.toFixed(3)
-        
-
-  }).then((result) =>    res.status(200).json({
-        success: "CALCULATED PRICE",
-        price: +pricePerGallon.toFixed(3),
-        amountDue: +totalPrice.toFixed(2),
+  Pricing.checkState(email, userId)
+    .then((value) => {
+      // console.log("State: ", value[0][0].state);
+      if (value[0][0].state === "TX") locationFactor = 0.02;
+      return Pricing.checkHistory(email, userId);
+    })
+    .then((result) => {
+      // console.log("Total ordered before: ", result[0][0]["count(*)"]);
+      if (result[0][0]["count(*)"]) rateHistoryFactor = 0.01;
+      margin =
+        currentPrice *
+        (locationFactor -
+          rateHistoryFactor +
+          gallonsRequestedFactor +
+          companyProfitFactor);
+      suggestedPricePerGallon = currentPrice + margin;
+      /*
+      console.log("galReq: ", gallonsRequested);
+      console.log("margin: ", margin);
+      console.log("locationFactor: ", locationFactor);
+      console.log("rateHistoryFactor: ", rateHistoryFactor);
+      console.log("galReqFactor: ", gallonsRequestedFactor);
+      console.log("comProfFactor: ", companyProfitFactor);
+      console.log("sugg price/gal: ", suggestedPricePerGallon);
+      console.log("amountDue:", gallonsRequested * suggestedPricePerGallon);
+      */
+      res.status(200).json({
+        success: "Calculated Price Succesfully",
+        price: suggestedPricePerGallon,
+        amountDue: (gallonsRequested * suggestedPricePerGallon).toFixed(2),
         gallonsRequested: gallonsRequested,
         deliveryAddress: deliveryAddress,
         deliveryDate: deliveryDate,
-        })); 
-  
+      });
+    });
 };

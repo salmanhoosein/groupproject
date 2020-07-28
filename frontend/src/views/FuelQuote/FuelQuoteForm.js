@@ -45,8 +45,8 @@ function FQFORM(props) {
   const [gallonsRequested, setGallonsRequested] = React.useState();
   const [deliveryAddress, setDeliveryAddress] = React.useState();
   const [deliveryDate, setDeliveryDate] = React.useState();
-  const [price, setPrice] = React.useState();
-  const [amountDue, setAmountDue] = React.useState();
+  const [price, setPrice] = React.useState(null);
+  const [amountDue, setAmountDue] = React.useState(null);
 
   const reduxAuth = useSelector((state) => state.auth);
 
@@ -102,14 +102,14 @@ function FQFORM(props) {
           initialValues={{
             gallonsRequested: null,
             totalAmountDue: null,
-            price: null,
+            totalPrice: null,
           }}
           validationSchema={Yup.object().shape({
             gallonsRequested: Yup.number()
               .required("Gallons Requested is required")
               .nullable(),
             totalAmountDue: Yup.number().nullable(),
-            price: Yup.number().nullable(),
+            totalPrice: Yup.number().nullable(),
           })}
         >
           {({ errors, handleBlur, handleChange, touched, values }) => (
@@ -173,10 +173,6 @@ function FQFORM(props) {
                     label="Suggested Price/Gallon"
                     fullWidth
                     variant="outlined"
-                    onChange={(event) => {
-                      handleChange(event);
-                      setPrice(event.target.value);
-                    }}
                     value={price}
                   />
                 </Grid>
@@ -192,10 +188,6 @@ function FQFORM(props) {
                     InputLabelProps={{
                       shrink: true,
                     }}
-                    onChange={(event) => {
-                      handleChange(event);
-                      setAmountDue(event.target.value);
-                    }}
                     value={amountDue}
                   />
                 </Grid>
@@ -210,9 +202,6 @@ function FQFORM(props) {
                     variant="outlined"
                     InputLabelProps={{
                       shrink: true,
-                    }}
-                    onChange={(event) => {
-                      setDeliveryAddress(event.target.value);
                     }}
                     value={deliveryAddress}
                   />
@@ -260,7 +249,6 @@ function FQFORM(props) {
                       })
                         .then((res) => {
                           if (res.data.success) {
-                            console.log(res.data.price);
                             setPrice(res.data.price);
                             setAmountDue(res.data.amountDue);
                             setGallonsRequested(res.data.gallonsRequested);
@@ -283,8 +271,8 @@ function FQFORM(props) {
                     disabled={
                       !gallonsRequested ||
                       !deliveryAddress ||
-                      !deliveryDate ||
                       !price ||
+                      !deliveryDate ||
                       !amountDue
                     }
                     fullWidth
@@ -292,7 +280,7 @@ function FQFORM(props) {
                     type="submit"
                     variant="contained"
                     onClick={() => {
-                      console.log(typeof price);
+                      console.log(price);
                       //get token from redux, if user refreshed then from localstorage
                       let token = reduxAuth.user.token
                         ? reduxAuth.user.token
@@ -303,6 +291,7 @@ function FQFORM(props) {
                       let userId = reduxAuth.user.userId
                         ? reduxAuth.user.userId
                         : localStorage.getItem("userId");
+
                       axios({
                         method: "POST",
                         url: "http://localhost:8080/fuelform/add",

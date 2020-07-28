@@ -115,7 +115,7 @@ describe("Testing FuelForm Routes", () => {
     });
     it("it should NOT ADD a fuelform without valid amountDue field", (done) => {
       let noAmountDue = JSON.parse(JSON.stringify(fuelForm));
-      noAmountDue.amountDue = -2;
+      noAmountDue.amountDue = null;
       chai
         .request(app)
         .post("/fuelform/add")
