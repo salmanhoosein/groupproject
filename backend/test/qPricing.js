@@ -21,18 +21,6 @@ describe("Testing Pricing Routes", () => {
       .catch((err) => console.log(err));
   });
 
-  //connect to database
-  before((done) => {
-    db.execute("SELECT userId FROM profile WHERE email = ?", [
-      pricingForm.email,
-    ])
-      .then((res) => {
-        pricingForm.userId = res[0][0].userId;
-        done();
-      })
-      .catch((err) => console.log(err));
-  });
-
   //get authGuard token for each request
   beforeEach((done) => {
     chai
@@ -41,13 +29,15 @@ describe("Testing Pricing Routes", () => {
       .send(defaultUser)
       .end((err, res) => {
         token = res.body.token;
+        pricingForm.userId = res.body.userId;
+        pricingForm.email = res.body.email;
         res.should.have.status(200);
         done();
       });
   });
 
   describe("Pricing Auth Guard", () => {
-    it("it should NOT GET the pricing without Auth Header Token", (done) => {
+    it("it should NOT GET the price and amount due without Auth Header Token", (done) => {
       chai
         .request(app)
         .post("/pricing/get")
@@ -59,7 +49,7 @@ describe("Testing Pricing Routes", () => {
   });
 
   describe("Pricing Validations", () => {
-    it("it should GET the pricing with valid data", (done) => {
+    it("it should GET the price and amount due with valid data", (done) => {
       chai
         .request(app)
         .post("/pricing/get")
@@ -72,7 +62,7 @@ describe("Testing Pricing Routes", () => {
         });
     });
 
-    it("it should NOT GET the pricing without valid gallonsRequested field", (done) => {
+    it("it should NOT GET the price and amount due without valid gallonsRequested field", (done) => {
       let noGal = JSON.parse(JSON.stringify(pricingForm));
       noGal.gallonsRequested = null;
       chai
@@ -86,7 +76,7 @@ describe("Testing Pricing Routes", () => {
         });
     });
 
-    it("it should NOT GET the pricing without valid deliveryAddress field", (done) => {
+    it("it should NOT GET the price and amount due without valid deliveryAddress field", (done) => {
       let noDelAddr = JSON.parse(JSON.stringify(pricingForm));
       noDelAddr.deliveryAddress = null;
       chai
@@ -99,7 +89,7 @@ describe("Testing Pricing Routes", () => {
           done();
         });
     });
-    it("it should NOT GET the pricing without valid deliveryDate field", (done) => {
+    it("it should NOT GET the price and amount due without valid deliveryDate field", (done) => {
       let noDelDate = JSON.parse(JSON.stringify(pricingForm));
       noDelDate.deliveryDate = null;
       chai

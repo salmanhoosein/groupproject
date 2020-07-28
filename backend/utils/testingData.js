@@ -1,7 +1,6 @@
-let email = "testCase2@gmail.com"
 module.exports = {
   userData: {
-    email: email,
+    email: "testCase4@gmail.com",
     password: "password123",
   },
   profileData: {
@@ -25,7 +24,7 @@ module.exports = {
   },
   pricingData: {
     userId: null,
-    email: email,
+    email: null,
     gallonsRequested: Math.floor(Math.random() * 1000),
     deliveryAddress: "1234 Test Address",
     deliveryDate: "7/03/2020",
