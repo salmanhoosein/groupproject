@@ -1,13 +1,14 @@
-module.exports = {
+const faker = require("faker");
+const testingData = {
   userData: {
-    email: "testCase4@gmail.com",
+    email: faker.internet.email(),
     password: "password123",
   },
   profileData: {
     userId: null,
     email: null,
     fullName: "John Doe",
-    addressOne: "321 St",
+    addressOne: "1234 Test Address",
     addressTwo: "123",
     city: "Houston",
     state: "TX",
@@ -16,17 +17,19 @@ module.exports = {
   fuelFormData: {
     userId: null,
     email: null,
-    gallonsRequested: Math.floor(Math.random() * 1000),
+    gallonsRequested: 1500,
     deliveryAddress: "1234 Test Address",
     deliveryDate: "7/03/2020",
-    price: 12,
-    amountDue: 1000,
+    price: 1.695,
+    amountDue: 2542.5,
   },
   pricingData: {
     userId: null,
     email: null,
-    gallonsRequested: Math.floor(Math.random() * 1000),
+    gallonsRequested: 1500,
     deliveryAddress: "1234 Test Address",
     deliveryDate: "7/03/2020",
   },
 };
+
+module.exports = testingData;

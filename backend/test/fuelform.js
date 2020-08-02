@@ -129,22 +129,19 @@ describe("Testing FuelForm Routes", () => {
   });
 
   describe("FuelForm Database/Controllers", () => {
-    //add 3 fuelforms for the user
-    for (let index = 0; index < 3; index++) {
-      it("it should add a valid fuelform", (done) => {
-        chai
-          .request(app)
-          .post("/fuelform/add")
-          .set("Authorization", "Bearer " + token)
-          .send(fuelForm)
-          .end((err, res) => {
-            res.body.should.have.property("success");
-            expect(res.body.success).to.equal("Fuel quote added successfully!");
-            res.should.have.status(201);
-            done();
-          });
-      });
-    }
+    it("it should add a valid fuelform", (done) => {
+      chai
+        .request(app)
+        .post("/fuelform/add")
+        .set("Authorization", "Bearer " + token)
+        .send(fuelForm)
+        .end((err, res) => {
+          res.body.should.have.property("success");
+          expect(res.body.success).to.equal("Fuel quote added successfully!");
+          res.should.have.status(201);
+          done();
+        });
+    });
     it("it should get the fuelforms for the user", (done) => {
       chai
         .request(app)

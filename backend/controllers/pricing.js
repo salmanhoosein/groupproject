@@ -26,12 +26,10 @@ exports.getPricing = (req, res, next) => {
 
   Pricing.checkState(email, userId)
     .then((value) => {
-      // console.log("State: ", value[0][0].state);
       if (value[0][0].state === "TX") locationFactor = 0.02;
       return Pricing.checkHistory(email, userId);
     })
     .then((result) => {
-      // console.log("Total ordered before: ", result[0][0]["count(*)"]);
       if (result[0][0]["count(*)"]) rateHistoryFactor = 0.01;
       margin =
         currentPrice *
@@ -40,16 +38,6 @@ exports.getPricing = (req, res, next) => {
           gallonsRequestedFactor +
           companyProfitFactor);
       suggestedPricePerGallon = currentPrice + margin;
-
-      // console.log("galReq: ", gallonsRequested);
-      // console.log("margin: ", margin);
-      // console.log("locationFactor: ", locationFactor);
-      // console.log("rateHistoryFactor: ", rateHistoryFactor);
-      // console.log("galReqFactor: ", gallonsRequestedFactor);
-      // console.log("comProfFactor: ", companyProfitFactor);
-      // console.log("sugg price/gal: ", suggestedPricePerGallon);
-      // console.log("amountDue:", gallonsRequested * suggestedPricePerGallon);
-      // console.log("\n");
 
       res.status(200).json({
         success: "Calculated Price Succesfully",

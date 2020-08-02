@@ -155,8 +155,8 @@ describe("Testing Profile Routes ", () => {
     });
     it("it should update pre-existing profile", (done) => {
       let updatedProfile = JSON.parse(JSON.stringify(profile));
-      updatedProfile.city = "Updated City";
-      updatedProfile.fullName = "Updated Name";
+      updatedProfile.city = "houston";
+      updatedProfile.fullName = "jane doe";
       updatedProfile.addressTwo = null;
       chai
         .request(app)
